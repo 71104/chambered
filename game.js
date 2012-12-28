@@ -1,17 +1,1 @@
-function Floor(oogl, callback) {
-	var program = new oogl.AjaxProgram('floor', ['in_Vertex'], callback);
-	var arrays = new oogl.AttributeArrays(6);
-	arrays.add4('float', [
-		0, 0, 0, 1,
-		1, 0, 1, 0,
-		-1, 0, 1, 0,
-		-1, 0, -1, 0,
-		1, 0, -1, 0,
-		1, 0, 1, 0
-	]);
-	this.draw = function () {
-		program.use();
-		arrays.bindAndPointer();
-		arrays.drawTriangleFan();
-	};
-}
+function Camera(){var e=7.5,t=e*period/1e3,n=Math.PI,r=n*period/1e3,i,s,o,u;i=0,s=.35,o=0,u=0,this.move=function(e,n,s){u+=r*s,i+=Math.cos(u)*t*n-Math.sin(u)*t*e,o+=Math.sin(u)*t*n+Math.cos(u)*t*e},this.uniform=function(e){e.uniform("4fv","Camera",[i,s,o,u])}}function Floor(e,t){var n=new e.AjaxProgram("floor",["in_Vertex"],t),r=new e.AttributeArrays(6);r.add4("float",[0,0,0,1,1,0,1,0,-1,0,1,0,-1,0,-1,0,1,0,-1,0,1,0,1,0]),this.draw=function(){n.use(),r.bindAndPointer(),r.drawTriangleFan()}};
