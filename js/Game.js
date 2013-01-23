@@ -1,9 +1,6 @@
 /*global OOGL: false */
 
-/*jshint undef: false */
-
 function Game(oogl) {
-	/*jshint undef: true */
 	var camera = new Camera(oogl);
 	var floor = new Floor(oogl, function () {
 		(new OOGL.RenderLoop(function () {
@@ -12,3 +9,9 @@ function Game(oogl) {
 		})).start();
 	});
 }
+
+/*
+ * this hack is necessary to suppress linter's unused variable warning.
+ * `jshint unused: false` won't work due to a bug in jshint.
+ */
+(function () {})(Game);
