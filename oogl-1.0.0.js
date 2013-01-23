@@ -1,4 +1,4 @@
-/*! Object-Oriented Graphics Library - v1.0.0 - 2013-01-23
+/*! Object-Oriented Graphics Library - v1.0.0 - 2013-01-24
 * Released under the MIT License
 * http://oogljs.com/
 * Copyright (c) 2013 Alberto La Rocca */
@@ -6,7 +6,7 @@
 /**
  * This is OOGL's main namespace object and contains all the OOGL classes.
  *
- * All OOGL-specific class constructors are contained in this object. For
+ * Some OOGL-specific class constructors are contained in this object. For
  * example, to create an `OOGL.RenderLoop` object you construct it in this way:
  *
  *	var loop = new OOGL.RenderLoop( ... );
@@ -24,9 +24,8 @@
  * as GLSL shader and other asset loading code, as well as GLSL program
  * compilation and linking.
  *
- * TODO explain the `oogl` pseudo-module
- *
  * @module OOGL
+ * @main OOGL
  * @example
  *	OOGL(function () {
  *		var oogl = new OOGL.Context('canvas'); // suppose our canvas element's id is "canvas"
@@ -53,7 +52,70 @@ if (typeof $ === 'undefined') {
 	$ = OOGL;
 }
 
+/**
+ * This is actually a _pseudo_-module used to document OOGL classes whose
+ * namespace is a WebGL/OOGL context instance.
+ *
+ * You can get a `context` object by invoking the `OOGL.Context` constructor:
+ *
+ *	var context = new OOGL.Context(canvas);
+ *
+ * You can then use that object to construct context-specific objects, such as
+ * `Texture2D` objects:
+ *
+ *	var texture = new context.Texture2D();
+ *
+ * The `context` object is sometimes referred to with the `oogl` name because it
+ * is a normal `WebGLContext` object containing all the standard WebGL features,
+ * such as `createTexture`, `createShader`, `flush` and so on, plus
+ * OOGL-specific features such as `Texture2D`.
+ *
+ * @module context
+ * @main context
+ */
+
 /*global OOGL: false */
+
+/**
+ * Static class providing timing-related functions.
+ *
+ * @class OOGL.Timing
+ * @module OOGL
+ * @static
+ * @example
+ *	TODO
+ */
+OOGL.Timing = {
+	/**
+	 * Returns the current timestamp in milliseconds since the Epoch.
+	 *
+	 * This method relies on `window.performance.now` where available and
+	 * transparently falls back to `Date.now`.
+	 *
+	 * @method now
+	 * @static
+	 * @return {Number} The current timestamp in milliseconds.
+	 * @example
+	 *	TODO
+	 */
+	now: (function () {
+		if (('performance' in window) && ('now' in window.performance)) {
+			return function () {
+				return window.performance.now();
+			};
+		} else {
+			return function () {
+				return Date.now();
+			};
+		}
+	})()
+};
+
+/*global OOGL: false */
+
+/**
+ * @module OOGL
+ */
 
 /**
  * Provides methods for performing AJAX requests. Useful for loading assets such
@@ -231,6 +293,10 @@ OOGL.Ajax = new (function () {
 })();
 
 /*global OOGL: false */
+
+/**
+ * @module OOGL
+ */
 
 /**
  * A mutable 2-component vector.
@@ -601,6 +667,10 @@ OOGL.Vector2.I = new OOGL.Vector2(1, 0);
 OOGL.Vector2.J = new OOGL.Vector2(0, 1);
 
 /*global OOGL: false */
+
+/**
+ * @module OOGL
+ */
 
 /**
  * A mutable 3-component vector.
@@ -1056,6 +1126,10 @@ OOGL.Vector3.K = new OOGL.Vector3(0, 0, 1);
 /*global OOGL: false */
 
 /**
+ * @module OOGL
+ */
+
+/**
  * A mutable 4-component vector. This is usually the homogeneous version of a
  * 3-component vector.
  *
@@ -1146,6 +1220,10 @@ OOGL.Vector4.prototype = {
 };
 
 /*global OOGL: false */
+
+/**
+ * @module OOGL
+ */
 
 /**
  * A mutable 2x2 matrix.
@@ -1549,6 +1627,10 @@ OOGL.ScalingMatrix2 = function (x, y) {
 };
 
 /*global OOGL: false */
+
+/**
+ * @module OOGL
+ */
 
 /**
  * A mutable 3x3 matrix.
@@ -2013,6 +2095,10 @@ OOGL.ScalingMatrix3 = function (x, y, z) {
 /*global OOGL: false */
 
 /**
+ * @module OOGL
+ */
+
+/**
  * A mutable 4x4 matrix.
  *
  * @class OOGL.Matrix4
@@ -2249,6 +2335,10 @@ OOGL.PerspectiveProjection = function (screenRatio, focus) {
 };
 
 /**
+ * @module OOGL
+ */
+
+/**
  * Requests a new WebGL context on the specified canvas and wraps it in a new
  * OOGL object. An exception is thrown if WebGL is not supported or the GPU is
  * blacklisted.
@@ -2324,13 +2414,17 @@ OOGL.Context = function (canvasOrId, attributes) {
 /*global context: false */
 
 /**
+ * @module context
+ */
+
+/**
  * Wraps a GL buffer with a specified target, data type and usage settings.
  *
  * Instancing an object of this class is equivalent to calling the GL function
  * `createBuffer`. The returned `WebGLBuffer` object is extended by
  * OOGL-specific features and returned by the `Buffer` constructor.
  *
- * @class oogl.Buffer
+ * @class context.Buffer
  * @extends WebGLBuffer
  * @constructor
  * @param {Number} target The target against which this buffer will be bound
@@ -2535,8 +2629,8 @@ context.Buffer = (function () {
 /**
  * Wraps a GL buffer whose usage is set to `gl.STATIC_DRAW`.
  *
- * @class oogl.StaticBuffer
- * @extends oogl.Buffer
+ * @class context.StaticBuffer
+ * @extends context.Buffer
  * @constructor
  * @param {Number} target The target against which this buffer will be bound
  *	when the provided `bind` method is used. Either `gl.ARRAY_BUFFER` or
@@ -2553,8 +2647,8 @@ context.StaticBuffer = function (target, type) {
 /**
  * Wraps a GL buffer whose usage is set to `gl.STREAM_DRAW`.
  *
- * @class oogl.StreamBuffer
- * @extends oogl.Buffer
+ * @class context.StreamBuffer
+ * @extends context.Buffer
  * @constructor
  * @param {Number} target The target against which this buffer will be bound
  *	when the provided `bind` method is used. Either `gl.ARRAY_BUFFER` or
@@ -2571,8 +2665,9 @@ context.StreamBuffer = function (target, type) {
 /**
  * Wraps a GL buffer whose usage is set to `gl.DYNAMIC_DRAW`.
  *
- * @class oogl.DynamicBuffer
- * @extends oogl.Buffer
+ * @class context.DynamicBuffer
+ * @module context
+ * @extends context.Buffer
  * @constructor
  * @param {Number} target The target against which this buffer will be bound
  *	when the provided `bind` method is used. Either `gl.ARRAY_BUFFER` or
@@ -2589,8 +2684,8 @@ context.DynamicBuffer = function (target, type) {
 /**
  * Wraps a GL buffer whose target is set to `gl.ARRAY_BUFFER`.
  *
- * @class oogl.ArrayBuffer
- * @extends oogl.Buffer
+ * @class context.ArrayBuffer
+ * @extends context.Buffer
  * @constructor
  * @param {String} type One of `byte`, `ubyte`, `short`, `ushort` and `float`;
  *	indicates the type of the data that will be put in the buffer.
@@ -2607,8 +2702,8 @@ context.ArrayBuffer = function (type, usage) {
 /**
  * Wraps a GL buffer whose target is set to `gl.ELEMENT_ARRAY_BUFFER`.
  *
- * @class oogl.ElementArrayBuffer
- * @extends oogl.Buffer
+ * @class context.ElementArrayBuffer
+ * @extends context.Buffer
  * @constructor
  * @param {String} type One of `byte`, `ubyte`, `short`, `ushort` and `float`;
  *	indicates the type of the data that will be put in the buffer.
@@ -2626,8 +2721,8 @@ context.ElementArrayBuffer = function (type, usage) {
  * Wraps a GL buffer whose target is set to `gl.ARRAY_BUFFER` and usage to
  * `gl.STATIC_DRAW`.
  *
- * @class oogl.StaticArrayBuffer
- * @extends oogl.StaticBuffer
+ * @class context.StaticArrayBuffer
+ * @extends context.StaticBuffer
  * @constructor
  * @param {String} type One of `byte`, `ubyte`, `short`, `ushort` and `float`;
  *	indicates the type of the data that will be put in the buffer.
@@ -2642,8 +2737,8 @@ context.StaticArrayBuffer = function (type) {
  * Wraps a GL buffer whose target is set to `gl.ELEMENT_ARRAY_BUFFER` and usage
  * to `gl.STATIC_DRAW`.
  *
- * @class oogl.StaticElementArrayBuffer
- * @extends oogl.StaticBuffer
+ * @class context.StaticElementArrayBuffer
+ * @extends context.StaticBuffer
  * @constructor
  * @param {String} type One of `byte`, `ubyte`, `short`, `ushort` and `float`;
  *	indicates the type of the data that will be put in the buffer.
@@ -2658,8 +2753,8 @@ context.StaticElementArrayBuffer = function (type) {
  * Wraps a GL buffer whose target is set to `gl.ARRAY_BUFFER` and usage to
  * `gl.STREAM_DRAW`.
  *
- * @class oogl.StreamArrayBuffer
- * @extends oogl.StreamBuffer
+ * @class context.StreamArrayBuffer
+ * @extends context.StreamBuffer
  * @constructor
  * @param {String} type One of `byte`, `ubyte`, `short`, `ushort` and `float`;
  *	indicates the type of the data that will be put in the buffer.
@@ -2674,8 +2769,8 @@ context.StreamArrayBuffer = function (type) {
  * Wraps a GL buffer whose target is set to `gl.ELEMENT_ARRAY_BUFFER` and usage
  * to `gl.STREAM_DRAW`.
  *
- * @class oogl.StreamElementArrayBuffer
- * @extends oogl.StreamBuffer
+ * @class context.StreamElementArrayBuffer
+ * @extends context.StreamBuffer
  * @constructor
  * @param {String} type One of `byte`, `ubyte`, `short`, `ushort` and `float`;
  *	indicates the type of the data that will be put in the buffer.
@@ -2690,8 +2785,8 @@ context.StreamElementArrayBuffer = function (type) {
  * Wraps a GL buffer whose target is set to `gl.ARRAY_BUFFER` and usage to
  * `gl.DYNAMIC_DRAW`.
  *
- * @class oogl.DynamicArrayBuffer
- * @extends oogl.DynamicBuffer
+ * @class context.DynamicArrayBuffer
+ * @extends context.DynamicBuffer
  * @constructor
  * @param {String} type One of `byte`, `ubyte`, `short`, `ushort` and `float`;
  *	indicates the type of the data that will be put in the buffer.
@@ -2706,8 +2801,8 @@ context.DynamicArrayBuffer = function (type) {
  * Wraps a GL buffer whose target is set to `gl.ELEMENT_ARRAY_BUFFER` and usage
  * to `gl.DYNAMIC_DRAW`.
  *
- * @class oogl.DynamicElementArrayBuffer
- * @extends oogl.DynamicBuffer
+ * @class context.DynamicElementArrayBuffer
+ * @extends context.DynamicBuffer
  * @constructor
  * @param {String} type One of `byte`, `ubyte`, `short`, `ushort` and `float`;
  *	indicates the type of the data that will be put in the buffer.
@@ -2721,6 +2816,10 @@ context.DynamicElementArrayBuffer = function (type) {
 /*global context: false */
 
 /**
+ * @module context
+ */
+
+/**
  * Creates an array buffer with static draw usage representing a single
  * component vertex attribute array.
  *
@@ -2729,8 +2828,8 @@ context.DynamicElementArrayBuffer = function (type) {
  * `gl.enableVertexAttribArray` and the provided `pointer` method invokes
  * `gl.vertexAttribPointer` with the specified `index` and `type`.
  *
- * @class oogl.AttributeArray1
- * @extends oogl.StaticArrayBuffer
+ * @class context.AttributeArray1
+ * @extends context.StaticArrayBuffer
  * @constructor
  * @param {Number} index The attribute array index.
  * @param {String} type One of `byte`, `ubyte`, `short`, `ushort` or `float`;
@@ -2835,8 +2934,8 @@ context.AttributeArray1 = function (index, type, data, normalize) {
  * `gl.enableVertexAttribArray` and the provided `pointer` method invokes
  * `gl.vertexAttribPointer` with the specified `index` and `type`.
  *
- * @class oogl.AttributeArray2
- * @extends oogl.StaticArrayBuffer
+ * @class context.AttributeArray2
+ * @extends context.StaticArrayBuffer
  * @constructor
  * @param {Number} index The attribute array index.
  * @param {String} type One of `byte`, `ubyte`, `short`, `ushort` or `float`;
@@ -2941,8 +3040,8 @@ context.AttributeArray2 = function (index, type, data, normalize) {
  * `gl.enableVertexAttribArray` and the provided `pointer` method invokes
  * `gl.vertexAttribPointer` with the specified `index` and `type`.
  *
- * @class oogl.AttributeArray3
- * @extends oogl.StaticArrayBuffer
+ * @class context.AttributeArray3
+ * @extends context.StaticArrayBuffer
  * @constructor
  * @param {Number} index The attribute array index.
  * @param {String} type One of `byte`, `ubyte`, `short`, `ushort` or `float`;
@@ -3047,8 +3146,8 @@ context.AttributeArray3 = function (index, type, data, normalize) {
  * `gl.enableVertexAttribArray` and the provided `pointer` method invokes
  * `gl.vertexAttribPointer` with the specified `index` and `type`.
  *
- * @class oogl.AttributeArray4
- * @extends oogl.StaticArrayBuffer
+ * @class context.AttributeArray4
+ * @extends context.StaticArrayBuffer
  * @constructor
  * @param {Number} index The attribute array index.
  * @param {String} type One of `byte`, `ubyte`, `short`, `ushort` or `float`;
@@ -3150,7 +3249,7 @@ context.AttributeArray4 = function (index, type, data, normalize) {
  * Represents a set of vertex attribute arrays; simplifies the management of
  * multiple arrays.
  *
- * @class oogl.AttributeArrays
+ * @class context.AttributeArrays
  * @constructor
  * @param {Number} count The number of vertex attributes each array will
  *	contain.
@@ -3691,8 +3790,8 @@ context.AttributeArrays = function (count) {
  * This class inherits `StaticElementArrayBuffer` and introduces utility
  * methods.
  *
- * @class oogl.ElementArray
- * @extends oogl.StaticElementArrayBuffer
+ * @class context.ElementArray
+ * @extends context.StaticElementArrayBuffer
  * @constructor
  * @param {Number[]} indices The element indices.
  * @param {String} [type='ushort'] The type of each index. It can be either
@@ -3802,13 +3901,17 @@ context.ElementArray = function (indices, type) {
 /*global context: false */
 
 /**
+ * @module context
+ */
+
+/**
  * Wraps a GL texture with a specified target.
  *
  * Instancing an object of this class is equivalent to calling the GL function
  * `createTexture`. The returned `WebGLTexture` object is extended by
  * OOGL-specific features and returned by the `Texture` constructor.
  *
- * @class oogl.Texture
+ * @class context.Texture
  * @extends WebGLTexture
  * @constructor
  * @param {Number} target The target against which this texture will be bound
@@ -4133,8 +4236,8 @@ context.Texture = function (target) {
 /**
  * An `oogl.Texture` whose target is `gl.TEXTURE_2D`.
  *
- * @class oogl.Texture2D
- * @extends oogl.Texture
+ * @class context.Texture2D
+ * @extends context.Texture
  * @constructor
  * @example
  *	var texture = new oogl.Texture2D();
@@ -4154,8 +4257,8 @@ context.Texture2D = function () {
  * `gl.TEXTURE_2D` target, sets minifying and magnifying filters and passes the
  * image to `gl.texImage2D`.
  *
- * @class oogl.AutoTexture
- * @extends oogl.Texture2D
+ * @class context.AutoTexture
+ * @extends context.Texture2D
  * @constructor
  * @param {Mixed} object A DOM image, canvas or video element to use as the
  *	texture image.
@@ -4198,8 +4301,8 @@ context.AutoTexture = function (object, magFilter, minFilter) {
  * If the texture image is loaded successfully, the specified `callback`
  * function is invoked using this `AsyncTexture` object as `this`.
  *
- * @class oogl.AsyncTexture
- * @extends oogl.Texture2D
+ * @class context.AsyncTexture
+ * @extends context.Texture2D
  * @constructor
  * @param {String} url The URL of the texture image.
  * @param {Function} callback A user-defined callback function that is called
@@ -4256,8 +4359,8 @@ context.AsyncTexture = function (url, callback, magFilter, minFilter) {
 /**
  * An `oogl.Texture` whose target is `gl.TEXTURE_CUBE_MAP`.
  *
- * @class oogl.CubeMap
- * @extends oogl.Texture
+ * @class context.CubeMap
+ * @extends context.Texture
  * @constructor
  * @example
  *	var cubeMap = new oogl.CubeMap();
@@ -4280,7 +4383,7 @@ context.CubeMap = function () {
  * A `Texture` object may belong to several `Textures` sets at the same
  * time, so that it can be used by several programs.
  *
- * @class oogl.Textures
+ * @class context.Textures
  * @constructor
  * @param {Object} [textures={}] An optional object that map names to
  *	`oogl.Texture` objects. Names are used when specifying uniform variables
@@ -4315,7 +4418,7 @@ context.Textures = function (textures) {
 		 *
 		 * @method add
 		 * @param {String} name The name of the associated uniform variable.
-		 * @param {oogl.Texture} texture The OOGL texture to add.
+		 * @param {context.Texture} texture The OOGL texture to add.
 		 * @example
 		 *	var textures = new oogl.Textures();
 		 *	textures.add('Texture', texture);
@@ -4361,7 +4464,7 @@ context.Textures = function (textures) {
 		 * automatically assigned texture units.
 		 *
 		 * @method uniform
-		 * @param {oogl.Program} program An `oogl.Program`.
+		 * @param {context.Program} program A `context.Program`.
 		 * @example
 		 *	var textures = new oogl.Textures({
 		 *		'Texture': texture,
@@ -4384,7 +4487,7 @@ context.Textures = function (textures) {
 		 * Equivalent to calling `bind` and `uniform` subsequently.
 		 *
 		 * @method bindAndUniform
-		 * @param {oogl.Program} program An `oogl.Program`.
+		 * @param {context.Program} program A `context.Program`.
 		 * @example
 		 *	var textures = new oogl.Textures({
 		 *		'Texture': texture,
@@ -4423,9 +4526,13 @@ context.Textures = function (textures) {
 /*global OOGL: false, context: false */
 
 /**
+ * @module context
+ */
+
+/**
  * Wraps a GL shader.
  *
- * @class oogl.Shader
+ * @class context.Shader
  * @extends WebGLShader
  * @constructor
  * @param {Number} type The type of shader. Either `oogl.VERTEX_SHADER` or
@@ -4605,8 +4712,8 @@ context.Shader = function (type) {
  * the GLSL source code for the shader and tries to compile it through the
  * provided `compileOrThrow` method.
  *
- * @class oogl.VertexShader
- * @extends oogl.Shader
+ * @class context.VertexShader
+ * @extends context.Shader
  * @constructor
  * @param {String} [source] The optional GLSL source code for the shader.
  * @example
@@ -4628,8 +4735,8 @@ context.VertexShader = function (source) {
  * containing the GLSL source code for the shader and tries to compile it
  * through the provided `compileOrThrow` method.
  *
- * @class oogl.FragmentShader
- * @extends oogl.Shader
+ * @class context.FragmentShader
+ * @extends context.Shader
  * @constructor
  * @param {String} [source] The optional GLSL source code for the shader.
  * @example
@@ -4654,8 +4761,8 @@ context.FragmentShader = function (source) {
  * `callback` function is invoked using this `AjaxVertexShader` object as
  * `this`.
  *
- * @class oogl.AjaxVertexShader
- * @extends oogl.Shader
+ * @class context.AjaxVertexShader
+ * @extends context.Shader
  * @constructor
  * @param {String} url A URL referring to the GLSL source code.
  * @param {Function} [callback] The callback function.
@@ -4685,8 +4792,8 @@ context.AjaxVertexShader = function (url, callback) {
  * callback function is invoked using this `AjaxFragmentShader` object as
  * `this`.
  *
- * @class oogl.AjaxFragmentShader
- * @extends oogl.Shader
+ * @class context.AjaxFragmentShader
+ * @extends context.Shader
  * @constructor
  * @param {String} url A URL referring to the GLSL source code.
  * @param {Function} [callback] The callback function.
@@ -4709,6 +4816,10 @@ context.AjaxFragmentShader = function (url, callback) {
 /*global OOGL: false, context: false */
 
 /**
+ * @module context
+ */
+
+/**
  * Wraps a GL program.
  *
  * Instancing an object of this class is equivalent to calling the GL function
@@ -4720,7 +4831,7 @@ context.AjaxFragmentShader = function (url, callback) {
  * only once per variable name. The cache is automatically invalidated when the
  * program is linked using the provided `link` or `linkOrThrow` methods.
  *
- * @class oogl.Program
+ * @class context.Program
  * @extends WebGLProgram
  * @constructor
  * @example
@@ -5454,30 +5565,93 @@ context.Program = function () {
 		context.uniform4iv(getUniformLocation(name), values);
 	};
 
+	/**
+	 * TODO
+	 *
+	 * @method uniformVec2
+	 * @param {String} name TODO
+	 * @param {OOGL.Vector2} v TODO
+	 * @example
+	 *	TODO
+	 */
 	program.uniformVec2 = function (name, v) {
 		context.uniform2f(getUniformLocation(name), v.x, v.y);
 	};
 
+	/**
+	 * TODO
+	 *
+	 * @method uniformVec3
+	 * @param {String} name TODO
+	 * @param {OOGL.Vector3} v TODO
+	 * @example
+	 *	TODO
+	 */
 	program.uniformVec3 = function (name, v) {
 		context.uniform3f(getUniformLocation(name), v.x, v.y, v.z);
 	};
 
+	/**
+	 * TODO
+	 *
+	 * @method uniformVec4
+	 * @param {String} name TODO
+	 * @param {OOGL.Vector4} v TODO
+	 * @example
+	 *	TODO
+	 */
 	program.uniformVec4 = function (name, v) {
 		context.uniform2f(getUniformLocation(name), v.x, v.y, v.z, v.w);
 	};
 
+	/**
+	 * TODO
+	 *
+	 * @method uniformMatrix2fv
+	 * @param {String} name TODO
+	 * @param {Number[]} values TODO
+	 * @example
+	 *	TODO
+	 */
 	program.uniformMatrix2fv = function (name, values) {
 		context.uniformMatrix2fv(getUniformLocation(name), false, values);
 	};
 
+	/**
+	 * TODO
+	 *
+	 * @method uniformMatrix3fv
+	 * @param {String} name TODO
+	 * @param {Number[]} values TODO
+	 * @example
+	 *	TODO
+	 */
 	program.uniformMatrix3fv = function (name, values) {
 		context.uniformMatrix3fv(getUniformLocation(name), false, values);
 	};
 
+	/**
+	 * TODO
+	 *
+	 * @method uniformMatrix4fv
+	 * @param {String} name TODO
+	 * @param {Number[]} values TODO
+	 * @example
+	 *	TODO
+	 */
 	program.uniformMatrix4fv = function (name, values) {
 		context.uniformMatrix4fv(getUniformLocation(name), false, values);
 	};
 
+	/**
+	 * TODO
+	 *
+	 * @method uniformMat2
+	 * @param {String} name TODO
+	 * @param {OOGL.Matrix2} matrix TODO
+	 * @example
+	 *	TODO
+	 */
 	program.uniformMat2 = function (name, matrix) {
 		context.uniformMatrix2fv(getUniformLocation(name), false, [
 			matrix[0], matrix[1],
@@ -5485,6 +5659,15 @@ context.Program = function () {
 		]);
 	};
 
+	/**
+	 * TODO
+	 *
+	 * @method uniformMat3
+	 * @param {String} name TODO
+	 * @param {OOGL.Matrix3} matrix TODO
+	 * @example
+	 *	TODO
+	 */
 	program.uniformMat3 = function (name, matrix) {
 		context.uniformMatrix3fv(getUniformLocation(name), false, [
 			matrix[0], matrix[1], matrix[2],
@@ -5493,6 +5676,15 @@ context.Program = function () {
 		]);
 	};
 
+	/**
+	 * TODO
+	 *
+	 * @method uniformMat4
+	 * @param {String} name TODO
+	 * @param {OOGL.Matrix4} matrix TODO
+	 * @example
+	 *	TODO
+	 */
 	program.uniformMat4 = function (name, matrix) {
 		context.uniformMatrix4fv(getUniformLocation(name), false, [
 			matrix[0], matrix[1], matrix[2], matrix[3],
@@ -5541,8 +5733,8 @@ context.Program = function () {
  * Before linking, the `AutoProgram` constructor also binds a specified set of
  * attribute variables to their respective indices using `bindAttribLocation`.
  *
- * @class oogl.AutoProgram
- * @extends oogl.Program
+ * @class context.AutoProgram
+ * @extends context.Program
  * @constructor
  * @param {String} vertexSource The GLSL source code for the vertex shader.
  * @param {String} fragmentSource The GLSL source code for the fragment shader.
@@ -5560,7 +5752,7 @@ context.AutoProgram = function (vertexSource, fragmentSource, attributes) {
 	 * Returns the vertex shader automatically generated by the constructor.
 	 *
 	 * @method getVertexShader
-	 * @return {oogl.VertexShader} The vertex shader.
+	 * @return {context.VertexShader} The vertex shader.
 	 * @example
 	 *	TODO
 	 */
@@ -5572,7 +5764,7 @@ context.AutoProgram = function (vertexSource, fragmentSource, attributes) {
 	 * Returns the fragment shader automatically generated by the constructor.
 	 *
 	 * @method getFragmentShader
-	 * @return {oogl.FragmentShader} The fragment shader.
+	 * @return {context.FragmentShader} The fragment shader.
 	 * @example
 	 *	TODO
 	 */
@@ -5604,8 +5796,8 @@ context.AutoProgram = function (vertexSource, fragmentSource, attributes) {
  * If the program is compiled and linked successfully, the specified `callback`
  * function is invoked using this `AjaxProgram` object as `this`.
  *
- * @class oogl.AjaxProgram
- * @extends oogl.Program
+ * @class context.AjaxProgram
+ * @extends context.Program
  * @constructor
  * @param {String} name The URL to the shader sources excluding the file name
  *	extension, which is automatically appended.
@@ -5638,7 +5830,7 @@ context.AjaxProgram = function (name, attributes, callback) {
 			 * constructor.
 			 *
 			 * @method getVertexShader
-			 * @return {oogl.VertexShader} The vertex shader.
+			 * @return {context.VertexShader} The vertex shader.
 			 * @example
 			 *	TODO
 			 */
@@ -5651,7 +5843,7 @@ context.AjaxProgram = function (name, attributes, callback) {
 			 * constructor.
 			 *
 			 * @method getFragmentShader
-			 * @return {oogl.FragmentShader} The fragment shader.
+			 * @return {context.FragmentShader} The fragment shader.
 			 * @example
 			 *	TODO
 			 */
@@ -5670,13 +5862,17 @@ context.AjaxProgram = function (name, attributes, callback) {
 /*global context: false */
 
 /**
+ * @module context
+ */
+
+/**
  * Wraps a GL framebuffer object.
  *
  * Instancing an object of this class is equivalent to calling the GL function
  * `createFramebuffer`. The returned `WebGLFramebuffer` object is extended by
  * OOGL-specific features and returned by the `Framebuffer` constructor.
  *
- * @class oogl.Framebuffer
+ * @class context.Framebuffer
  * @constructor
  * @example
  *	var oogl = new OOGL.Context('canvas');
@@ -5795,13 +5991,17 @@ context.Framebuffer = function () {
 /*global context: false */
 
 /**
+ * @module context
+ */
+
+/**
  * Wraps a GL renderbuffer.
  *
  * Instancing an object of this class is equivalent to calling the GL function
  * `createRenderbuffer`. The returned `WebGLRenderbuffer` object is extended by
  * OOGL-specific features and returned by the `Renderbuffer` constructor.
  *
- * @class oogl.Renderbuffer
+ * @class context.Renderbuffer
  * @constructor
  * @example
  *	var oogl = new OOGL.Context('canvas');
@@ -5998,6 +6198,10 @@ context.Renderbuffer = function () {
 /*global OOGL: false */
 
 /**
+ * @module OOGL
+ */
+
+/**
  * Efficient render loop implementation that uses `requestAnimationFrame` where
  * available and transparently falls back on `setInterval`.
  *
@@ -6159,8 +6363,8 @@ OOGL.RenderLoop = (function () {
 			 * the rate manually set using the static `setRate` method.
 			 *
 			 * The actual frame rate is measured as the number of loop
-			 * iterations since the last time `getActualFrameRate` was called
-			 * divided by the timespan.
+			 * iterations since the last time `getActualRate` was called divided
+			 * by the timespan.
 			 *
 			 * The measuring system automatically discards time spans during
 			 * which the loop was suspended.
