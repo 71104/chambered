@@ -2,10 +2,11 @@ module.exports = function (grunt) {
 	var files = [
 		'js/Camera.js',
 		'js/Floor.js',
+		'js/Game.js',
 		];
 	grunt.initConfig({
 		lint: {
-			files: files
+			files: ['game.js']
 		},
 		jshint: {
 			options: {
@@ -48,5 +49,5 @@ module.exports = function (grunt) {
 		}
 	});
 	grunt.registerTask('default', 'min');
-	grunt.registerTask('debug', 'lint concat');
+	grunt.registerTask('debug', 'concat lint');
 };
