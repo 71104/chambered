@@ -3,6 +3,6 @@ Chambered
 
 Prelude of the Chambered is a game made by Notch for a past edition of the Ludum Dare competition.
 
-This is my remake based on WebGL and OOGL.
+This is my remake based on WebGL and [OOGL](http://oogljs.com/).
 
 Play it [here](http://oogljs.com/chambered/).
