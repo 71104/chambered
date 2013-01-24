@@ -2,6 +2,7 @@ module.exports = function (grunt) {
 	var files = [
 		'js/Camera.js',
 		'js/Floor.js',
+		'js/Ceiling.js',
 		'js/Game.js',
 		];
 	grunt.initConfig({
