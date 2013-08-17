@@ -77,13 +77,20 @@ if (typeof $ === 'undefined') {
 /*global OOGL: false */
 
 /**
+ * @module OOGL
+ */
+
+/**
  * Static class providing timing-related functions.
  *
  * @class OOGL.Timing
  * @module OOGL
  * @static
  * @example
- *	TODO
+ *	var loop = new OOGL.RenderLoop(function () {
+ *		console.log(OOGL.Timing.now());
+ *	});
+ *	loop.start();
  */
 OOGL.Timing = {
 	/**
@@ -96,17 +103,16 @@ OOGL.Timing = {
 	 * @static
 	 * @return {Number} The current timestamp in milliseconds.
 	 * @example
-	 *	TODO
+	 *	var loop = new OOGL.RenderLoop(function () {
+	 *		console.log(OOGL.Timing.now());
+	 *	});
+	 *	loop.start();
 	 */
 	now: (function () {
 		if (('performance' in window) && ('now' in window.performance)) {
-			return function () {
-				return window.performance.now();
-			};
+			return window.performance.now.bind(window.performance);
 		} else {
-			return function () {
-				return Date.now();
-			};
+			return Date.now.bind(Date);
 		}
 	})()
 };
@@ -446,6 +452,10 @@ OOGL.Ajax = new (function () {
 /*global OOGL: false */
 
 /**
+ * @module OOGL
+ */
+
+/**
  * Represents a queue of asynchronous tasks. This is mainly used to manage
  * asynchronous asset loading and is inherited by
  * {{#crossLink "context.Loader"}}Loader{{/crossLink}}.
@@ -484,7 +494,10 @@ OOGL.TaskQueue = function () {
 	 * @example
 	 *	TODO
 	 */
-	this.queue = enqueue;
+	this.queue = function () {
+		queue.push.apply(queue, arguments);
+		return thisObject;
+	};
 
 	/**
 	 * Queues zero or more synchronous tasks.
@@ -5766,7 +5779,9 @@ context.AjaxVertexShader = function (url, callback) {
 	var shader = new context.Shader(context.VERTEX_SHADER);
 	OOGL.Ajax.get(url, function (source) {
 		shader.source(source);
-		shader.compileOrThrow();
+		if (!context.getShaderParameter(shader, context.COMPILE_STATUS)) {
+			throw 'Failed to compile <' + url + '>, info log follows.\n' + context.getShaderInfoLog(shader);
+		}
 		callback && callback.call(shader);
 	});
 	return shader;
@@ -5797,7 +5812,9 @@ context.AjaxFragmentShader = function (url, callback) {
 	var shader = new context.Shader(context.FRAGMENT_SHADER);
 	OOGL.Ajax.get(url, function (source) {
 		shader.source(source);
-		shader.compileOrThrow();
+		if (!context.getShaderParameter(shader, context.COMPILE_STATUS)) {
+			throw 'Failed to compile <' + url + '>, info log follows.\n' + context.getShaderInfoLog(shader);
+		}
 		callback && callback.call(shader);
 	});
 	return shader;
@@ -7204,6 +7221,10 @@ context.Renderbuffer = function () {
 
 /*global OOGL: false */
 /*global context: false */
+
+/**
+ * @module context
+ */
 
 /**
  * Manages asynchronous asset loading with progress feedback.
