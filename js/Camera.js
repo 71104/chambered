@@ -16,6 +16,6 @@ function Camera() {
 		z += Math.sin(a) * moveDelta * dx + Math.cos(a) * moveDelta * dz;
 	};
 	this.uniform = function (program) {
-		program.uniform('4fv', 'Camera', [x, y, z, a]);
+		program.uniform4fv('Camera', [x, y, z, a]);
 	};
 }
