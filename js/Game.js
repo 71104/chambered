@@ -1,9 +1,15 @@
-function Game(oogl) {
+function Game() {
 	var loader = new oogl.Loader();
 	loader
+		.queueJSON('data/crypt.json')
+		.queueJSON('data/dungeon.json')
+		.queueJSON('data/ice.json')
+		.queueJSON('data/overworld.json')
+		.queueJSON('data/start.json')
+		.queueJSON('data/temple.json')
+		.queueTexture('media/sky.png', oogl.NEAREST, oogl.NEAREST)
 		.queueTextures(
 	[
-		'media/sky.png',
 		'media/levels/crypt/walls.png',
 		'media/levels/crypt/floor.png',
 		'media/levels/crypt/squares.png',
@@ -72,14 +78,27 @@ function Game(oogl) {
 		.start(function ()
 	{
 		document.title = 'Prelude of the Chambered';
-		var camera = new Camera(oogl);
-		var floor = new Floor(oogl, function () {
-			(new OOGL.RenderLoop(function () {
-				floor.draw(camera);
-				oogl.flush();
-			})).start();
+
+		var camera = new Camera();
+
+		var levels = {};
+		[
+			'crypt',
+			'dungeon',
+			'ice',
+			'overworld',
+			'start',
+			'temple'
+		].forEach(function (name) {
+			levels[name] = new Level(loader, name, camera);
 		});
-		// TODO
+
+		var currentLevel = 'start';
+
+		(new OOGL.RenderLoop(function () {
+			levels[currentLevel].render();
+			oogl.flush();
+		})).start();
 	}, function (progress) {
 		document.title = Math.round(progress) + '%';
 	});

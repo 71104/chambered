@@ -5,9 +5,11 @@
 	<meta http-equiv="X-UA-Compatible" content="chrome=1"/>
 	<link rel="stylesheet" type="text/css" href="css/style.css"/>
 	<script type="text/javascript" src="js/oogl-1.0.0.js"></script>
+	<script type="text/javascript" src="js/Physics.js"></script>
 	<script type="text/javascript" src="js/Camera.js"></script>
-	<script type="text/javascript" src="js/Ceiling.js"></script>
-	<script type="text/javascript" src="js/Floor.js"></script>
+	<script type="text/javascript" src="js/Sky.js"></script>
+	<script type="text/javascript" src="js/Plane.js"></script>
+	<script type="text/javascript" src="js/Level.js"></script>
 	<script type="text/javascript" src="js/Game.js"></script>
 </head>
 <body>
@@ -18,8 +20,9 @@
 	</canvas>
 	<p>(You don't need Java to play this)</p>
 	<script type="text/javascript">
+var oogl;
 OOGL(function () {
-	new Game(new OOGL.Context('canvas', {
+	new Game(oogl = new OOGL.Context('canvas', {
 		alpha: false
 	}));
 });
