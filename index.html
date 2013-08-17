@@ -3,16 +3,20 @@
 <head>
 	<title>Prelude of the Chambered</title>
 	<meta http-equiv="X-UA-Compatible" content="chrome=1"/>
+	<link rel="stylesheet" type="text/css" href="css/style.css"/>
 	<script type="text/javascript" src="js/oogl-1.0.0.js"></script>
 	<script type="text/javascript" src="js/Camera.js"></script>
 	<script type="text/javascript" src="js/Ceiling.js"></script>
 	<script type="text/javascript" src="js/Floor.js"></script>
 	<script type="text/javascript" src="js/Game.js"></script>
 </head>
-<body style="text-align:center">
+<body>
+	<br/><p></p>
+	<br/><p></p>
 	<canvas id="canvas" width="640" height="364">
 		<p>No browser support.</p>
 	</canvas>
+	<p>(You don't need Java to play this)</p>
 	<script type="text/javascript">
 OOGL(function () {
 	new Game(new OOGL.Context('canvas', {

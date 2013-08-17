@@ -15,6 +15,8 @@ function Floor(oogl, callback) {
 		program.use();
 		camera.uniform(program);
 		arrays.bindAndPointer();
+		arrays.enable();
 		arrays.drawTriangleFan();
+		arrays.disable();
 	};
 }
