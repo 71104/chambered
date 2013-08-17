@@ -1,6 +1,6 @@
 function Plane(levelName, loader, camera) {
 	var program = loader.getProgram('glsl/plane');
-	var texture = loader.getTexture('media/levels/' + levelName + '/floor');
+	var texture = loader.getTexture('media/levels/' + levelName + '/floor.png');
 
 	var arrays = new oogl.AttributeArrays(6);
 	arrays.add4f([
