@@ -17,25 +17,25 @@ function Level(loader, name, camera) {
 	//this.bars = new Bars(this, data.walkMap);
 	//this.enemies = new Enemies(this);
 
-	//this.block = function (i, j) {
-	//	return (i in data.walkMap) && data.walkMap[i][j];
-	//};
+	this.block = function (i, j) {
+		return (i in data.walkMap) && data.walkMap[i][j];
+	};
 
-	//this.ice = function (i, j) {
-	//	return (i in data.floorMap) && (data.floorMap[i][j] === 8);
-	//};
+	this.ice = function (i, j) {
+		return (i in data.floorMap) && (data.floorMap[i][j] === 8);
+	};
 
-	//this.water = function (i, j) {
-	//	return (i in data.waterMap) && data.waterMap[i][j];
-	//};
+	this.water = function (i, j) {
+		return (i in data.waterMap) && data.waterMap[i][j];
+	};
 
-	//this.ladder = function (i, j) {
-	//	return (i in data.ladderMap) && data.ladderMap[i][j];
-	//};
+	this.ladder = function (i, j) {
+		return (i in data.ladderMap) && data.ladderMap[i][j];
+	};
 
-	//this.getLadder = function (source) {
-	//	return data.ladders[source];
-	//};
+	this.getLadder = function (source) {
+		return data.ladders[source];
+	};
 
 	oogl.depthFunc(oogl.GREATER);
 	oogl.clearDepth(0);
