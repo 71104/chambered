@@ -148,9 +148,9 @@ function Keyboard() {
 		return !!keys[key];
 	};
 
-	this.allDown = function (keys) {
+	this.allDown = function (testKeys) {
 		for (var i in testKeys) {
-			if (!keys[testKeys]) {
+			if (!keys[testKeys[i]]) {
 				return false;
 			}
 		}
@@ -159,7 +159,7 @@ function Keyboard() {
 
 	this.anyDown = function (testKeys) {
 		for (var i in testKeys) {
-			if (keys[testKeys]) {
+			if (keys[testKeys[i]]) {
 				return true;
 			}
 		}

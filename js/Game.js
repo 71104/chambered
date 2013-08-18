@@ -124,7 +124,7 @@ function Game() {
 			if (keyboard.isDown(KeyEvent.DOM_VK_RIGHT)) {
 				da--;
 			}
-			camera.move(levels[currentLevel], dz, dx, da, false);
+			camera.move(levels[currentLevel], dz * 0.05, dx * 0.05, da * 0.05, false);
 			levels[currentLevel].render();
 			oogl.flush();
 		})).start();
