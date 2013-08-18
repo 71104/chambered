@@ -14,8 +14,8 @@ function Plane(levelName, loader, camera) {
 
 	this.setup = function () {
 		program.use();
-		arrays.bindAndPointer();
 		arrays.enable();
+		arrays.bindAndPointer();
 		texture.bind();
 		camera.uniform(program);
 	};
@@ -23,6 +23,9 @@ function Plane(levelName, loader, camera) {
 	this.render = function (height) {
 		program.uniform1f('fHeight', height);
 		arrays.drawTriangleFan();
+	};
+
+	this.cleanup = function () {
 		arrays.disable();
 	};
 }

@@ -156,11 +156,20 @@ OOGL.Ajax = new (function () {
 	}
 
 	function makeRequest(method, settings) {
+		var callback = settings.callback;
+		var json = (settings.type === 'json');
+		if (json) {
+			settings.type = ''; // XXX the "json" type is not supported by the major browsers
+		}
 		var xhr = new XHR(function () {
 			if (xhr.readyState === 4) {
 				if (xhr.status === 200) {
-					if (settings.hasOwnProperty('callback')) {
-						settings.callback(xhr.response);
+					if (callback) {
+						if (json) {
+							callback(JSON.parse(xhr.responseText));
+						} else {
+							callback(xhr.response);
+						}
 					}
 				} else {
 					errorCallback();
@@ -4486,7 +4495,7 @@ context.AttributeArrays = function (count) {
 		 *	arrays.add4b([1, 2, 3, 4, -1, -2, -3, -4]);
 		 */
 		add4b: function (data, normalize) {
-			arrays.push(new context.AttributeArray3(arrays.length, 'byte', data, normalize));
+			arrays.push(new context.AttributeArray4(arrays.length, 'byte', data, normalize));
 		},
 
 		/**
@@ -4501,7 +4510,7 @@ context.AttributeArrays = function (count) {
 		 *	arrays.add4ub([1, 2, 3, 4, 5, 6, 7, 8]);
 		 */
 		add4ub: function (data, normalize) {
-			arrays.push(new context.AttributeArray3(arrays.length, 'ubyte', data, normalize));
+			arrays.push(new context.AttributeArray4(arrays.length, 'ubyte', data, normalize));
 		},
 
 		/**
@@ -4517,7 +4526,7 @@ context.AttributeArrays = function (count) {
 		 *	arrays.add4s([1, 2, 3, 4, -5, -6, -7, -8]);
 		 */
 		add4s: function (data, normalize) {
-			arrays.push(new context.AttributeArray3(arrays.length, 'short', data, normalize));
+			arrays.push(new context.AttributeArray4(arrays.length, 'short', data, normalize));
 		},
 
 		/**
@@ -4533,7 +4542,7 @@ context.AttributeArrays = function (count) {
 		 *	arrays.add4us([1, 2, 3, 4, 5, 6, 7, 8]);
 		 */
 		add4us: function (data, normalize) {
-			arrays.push(new context.AttributeArray3(arrays.length, 'ushort', data, normalize));
+			arrays.push(new context.AttributeArray4(arrays.length, 'ushort', data, normalize));
 		},
 
 		/**
@@ -4549,7 +4558,7 @@ context.AttributeArrays = function (count) {
 		 *	arrays.add4f([1, 2, 3, 4, 5, 6, 7, 8]);
 		 */
 		add4f: function (data, normalize) {
-			arrays.push(new context.AttributeArray3(arrays.length, 'float', data, normalize));
+			arrays.push(new context.AttributeArray4(arrays.length, 'float', data, normalize));
 		},
 
 		/**

@@ -79,6 +79,15 @@ function Game() {
 	{
 		document.title = 'Prelude of the Chambered';
 
+		var keyboard = new Keyboard();
+		keyboard.prevent([
+			KeyEvent.DOM_VK_SPACE,
+			KeyEvent.DOM_VK_UP,
+			KeyEvent.DOM_VK_LEFT,
+			KeyEvent.DOM_VK_RIGHT,
+			KeyEvent.DOM_VK_DOWN
+		]);
+
 		var camera = new Camera();
 
 		var levels = {};
@@ -96,6 +105,26 @@ function Game() {
 		var currentLevel = 'start';
 
 		(new OOGL.RenderLoop(function () {
+			var dz = 0, dx = 0, da = 0;
+			if (keyboard.anyDown([KeyEvent.DOM_VK_UP, KeyEvent.DOM_VK_W])) {
+				dz++;
+			}
+			if (keyboard.anyDown([KeyEvent.DOM_VK_DOWN, KeyEvent.DOM_VK_S])) {
+				dz--;
+			}
+			if (keyboard.isDown(KeyEvent.DOM_VK_A)) {
+				dx--;
+			}
+			if (keyboard.isDown(KeyEvent.DOM_VK_D)) {
+				dx++;
+			}
+			if (keyboard.isDown(KeyEvent.DOM_VK_LEFT)) {
+				da++;
+			}
+			if (keyboard.isDown(KeyEvent.DOM_VK_RIGHT)) {
+				da--;
+			}
+			camera.move(levels[currentLevel], dz, dx, da, false);
 			levels[currentLevel].render();
 			oogl.flush();
 		})).start();

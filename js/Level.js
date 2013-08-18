@@ -39,6 +39,7 @@ function Level(loader, name, camera) {
 
 	oogl.depthFunc(oogl.GREATER);
 	oogl.clearDepth(0);
+	oogl.enable(oogl.DEPTH_TEST);
 	oogl.enable(oogl.CULL_FACE);
 
 	this.render = function () {
@@ -54,6 +55,7 @@ function Level(loader, name, camera) {
 		if (data.ceiling) {
 			plane.render(1);
 		}
+		plane.cleanup();
 		oogl.enable(oogl.CULL_FACE);
 	};
 }
