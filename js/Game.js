@@ -7,9 +7,9 @@ function Game() {
 		.queueJSON('data/overworld.json')
 		.queueJSON('data/start.json')
 		.queueJSON('data/temple.json')
-		.queueTexture('media/sky.png', oogl.NEAREST, oogl.NEAREST)
 		.queueTextures(
 	[
+		'media/sky.png',
 		'media/levels/crypt/walls.png',
 		'media/levels/crypt/floor.png',
 		'media/levels/crypt/squares.png',
@@ -60,7 +60,7 @@ function Game() {
 		'media/sprites/25.png',
 		'media/door/locked.png',
 		'media/door/unlocked.png'
-	])
+	], oogl.NEAREST, oogl.NEAREST)
 		.queuePrograms(
 	{
 		'glsl/blocks': ['in_Vertex', 'in_TexCoord', 'in_fBrightness'],
