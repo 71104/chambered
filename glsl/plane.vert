@@ -22,7 +22,7 @@ mat4 ModelViewProjection = mat4(
 	1, 0, 0, 0,
 	0, 1, 0, 0,
 	0, 0, 1, 0,
-	0, -1, 0, 1
+	0, fHeight, 0, 1
 );
 
 attribute vec4 in_Vertex;

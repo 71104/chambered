@@ -103,6 +103,7 @@ function Game() {
 		});
 
 		var currentLevel = 'start';
+		camera.set(22, 0.3, 16, Math.PI / 6);
 
 		(new OOGL.RenderLoop(function () {
 			var dz = 0, dx = 0, da = 0;
