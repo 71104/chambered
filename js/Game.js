@@ -88,6 +88,8 @@ function Game() {
 			KeyEvent.DOM_VK_DOWN
 		]);
 
+		var items = new Items(keyboard);
+
 		var camera = new Camera();
 
 		var levels = {};

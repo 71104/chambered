@@ -9,7 +9,9 @@
 	<meta property="og:image" content="http://71104.github.io/chambered/media/logo.png"/>
 	<link rel="stylesheet" type="text/css" href="css/style.css"/>
 	<script type="text/javascript" src="js/oogl-1.0.0.js"></script>
+	<script type="text/javascript" src="js/EventEmitter.js"></script>
 	<script type="text/javascript" src="js/Physics.js"></script>
+	<script type="text/javascript" src="js/Items.js"></script>
 	<script type="text/javascript" src="js/Keyboard.js"></script>
 	<script type="text/javascript" src="js/Camera.js"></script>
 	<script type="text/javascript" src="js/Sky.js"></script>
@@ -29,10 +31,42 @@ ga('send', 'pageview');
 <body>
 	<br/><p></p>
 	<br/><p></p>
-	<canvas id="canvas" width="640" height="364">
-		<p>No browser support.</p>
-	</canvas>
-	<p>(You don't need Java to play this)</p>
+	<div id="game-area">
+		<canvas id="canvas" width="640" height="364">
+			<p>No browser support.</p>
+		</canvas>
+		<img class="item" id="item-0" src="media/item/0/normal.png" alt="item"/>
+		<img class="item" id="item-1" src="media/item/1/normal.png" alt="item"/>
+		<img class="item" id="item-3" src="media/item/3/normal.png" alt="item"/>
+		<img class="item" id="item-5" src="media/item/5/normal.png" alt="item"/>
+		<img class="item" id="action-item-0" src="media/item/0/action.png" alt="item"/>
+		<img class="item" id="action-item-1" src="media/item/1/action.png" alt="item"/>
+		<img class="item" id="action-item-3" src="media/item/3/action.png" alt="item"/>
+		<img class="item" id="action-item-5" src="media/item/5/action.png" alt="item"/>
+		<div id="game-panel">
+			<table>
+				<tr>
+					<td id="item-icon-0" class="item-icon"></td>
+					<td id="item-icon-1" class="item-icon"></td>
+					<td id="item-icon-2" class="item-icon"></td>
+					<td id="item-icon-3" class="item-icon"></td>
+					<td id="item-icon-4" class="item-icon"></td>
+					<td id="item-icon-5" class="item-icon"></td>
+					<td id="item-icon-6" class="item-icon"></td>
+					<td id="item-icon-7" class="item-icon"></td>
+				</tr>
+			</table>
+			<div id="hiliter"></div>
+		</div>
+		<div id="loot-screen">
+			<!-- TODO loot icon -->
+			<p id="loot-message">You found the <span id="item-name"></span><br/><span id="loot-specific-message"></span></p>
+			<p></p>
+			<p id="continue-button">-&gt; Continue</p>
+		</div>
+	</div>
+	<div id="need-message">(You don't need Java to play this)</div>
+	<p></p>
 	<script type="text/javascript">
 var oogl;
 OOGL(function () {

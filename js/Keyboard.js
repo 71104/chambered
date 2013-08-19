@@ -119,6 +119,7 @@ if (typeof KeyEvent == "undefined") {
 }
 
 function Keyboard() {
+	EventEmitter.apply(this, arguments);
 	var thisObject = this;
 
 	var prevent = {};
@@ -129,12 +130,14 @@ function Keyboard() {
 			event.preventDefault();
 		}
 		keys[event.keyCode] = true;
+		thisObject.emit('down', event.keyCode);
 	}, false);
 	window.addEventListener('keyup', function (event) {
 		if (prevent[event.keyCode]) {
 			event.preventDefault();
 		}
 		delete keys[event.keyCode];
+		thisObject.emit('up', event.keyCode);
 	}, false);
 
 	this.prevent = function (keys) {
