@@ -5,8 +5,10 @@ uniform sampler2D Texture;
 varying vec2 ex_TexCoord;
 varying float ex_fDistance;
 
+float PI = acos(-1.0);
+
 vec4 Attenuate(vec4 Color, float fDistance) {
-	float fAttenuation = (-atan((fDistance - 6.0) * 0.3) + 1.5707963267) * 0.3183098861;
+	float fAttenuation = (-atan((fDistance - 6.0) * 0.3) + PI / 2.0) * 0.3183098861;
 	return vec4(vec3(Color) * fAttenuation, Color.a);
 }
 
