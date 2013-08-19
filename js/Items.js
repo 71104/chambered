@@ -18,6 +18,14 @@ function Items(keyboard) {
 		setItem();
 	}
 
+	function setElementText(selector, text) {
+		var element = querySelector(selector);
+		while (element.hasChildNodes()) {
+			element.removeChild(element.firstChild);
+		}
+		element.appendChild(createTextNode(text));
+	}
+
 	this.found = function (item) {
 		if (item in count) {
 			if (item == 1) {
@@ -35,8 +43,8 @@ function Items(keyboard) {
 			}
 			addItem(item);
 		}
-		querySelector('#loot-message #item-name').appendChild(createTextNode(itemNames[item]));
-		querySelector('#loot-message #loot-specific-message').appendChild(createTextNode(messages[item]));
+		setElementText('#loot-message #item-name', itemNames[item]);
+		setElementText('#loot-message #loot-specific-message', messages[item]);
 		querySelector('#loot-screen').style.display = 'block';
 		setTimeout(function () {
 			querySelector('#loot-screen #continue-button').style.display = 'inline';
