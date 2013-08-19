@@ -2,6 +2,7 @@ precision mediump float;
 
 uniform sampler2D Texture;
 
+varying float ex_fType;
 varying vec2 ex_Vertex;
 
 vec4 Attenuate(vec4 Color) {
@@ -11,13 +12,10 @@ vec4 Attenuate(vec4 Color) {
 }
 
 void main() {
-	gl_FragColor = Attenuate(vec4(1));
-/*
-	vec4 Sample = Attenuate(texture2D(Texture, ex_TexCoord));
+	vec4 Sample = Attenuate(texture2D(Texture, ex_Vertex + vec2(ex_fType, 0)));
 	if (Sample.a < 0.5) {
 		discard;
 	} else {
 		gl_FragColor = Sample;
 	}
-*/
 }

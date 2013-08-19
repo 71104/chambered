@@ -22,7 +22,9 @@ mat4 View = mat4(
 
 attribute vec2 in_Vertex;
 attribute vec2 in_Pivot;
+attribute float in_fType;
 
+varying float ex_fType;
 varying vec2 ex_Vertex;
 
 void main() {
@@ -31,7 +33,8 @@ void main() {
 		0, 1, 0, 0,
 		0, 0, 1, 0,
 		in_Vertex, 0, 1
-	) * View * vec4(in_Pivot.x, 0, in_Pivot.y, 0.5);
+	) * View * vec4(in_Pivot.x, 0, in_Pivot.y, 1);
 	gl_Position = Projection * Vertex;
+	ex_fType = in_fType;
 	ex_Vertex = vec2(Vertex.x, Vertex.z) / Vertex.w;
 }
