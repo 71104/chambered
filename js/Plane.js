@@ -1,4 +1,4 @@
-function Plane(levelName, loader, camera) {
+function Plane(levelName, loader) {
 	var program = loader.getProgram('glsl/plane');
 	var texture = loader.getTexture('media/levels/' + levelName + '/floor.png');
 
@@ -12,7 +12,7 @@ function Plane(levelName, loader, camera) {
 		1, 0, 1, 0
 	]);
 
-	this.setup = function () {
+	this.setup = function (camera) {
 		program.use();
 		arrays.enable();
 		arrays.bindAndPointer();

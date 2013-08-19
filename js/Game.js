@@ -66,7 +66,7 @@ function Game() {
 		'glsl/blocks': ['in_Vertex', 'in_TexCoord', 'in_fBrightness'],
 		'glsl/plane': ['in_Vertex'],
 		'glsl/sky': ['in_Vertex', 'in_TexCoord'],
-		'glsl/sprite': ['in_Vertex', 'in_TexCoord'],
+		'glsl/sprites': ['in_Vertex', 'in_TexCoord'],
 		'glsl/squares': ['in_Vertex', 'in_TexCoord'],
 		'glsl/door/0': ['in_Vertex', 'in_TexCoord'],
 		'glsl/door/1': ['in_Vertex', 'in_TexCoord'],
@@ -90,8 +90,6 @@ function Game() {
 
 		var items = new Items(keyboard);
 
-		var camera = new Camera();
-
 		var levels = {};
 		[
 			'crypt',
@@ -101,10 +99,12 @@ function Game() {
 			'start',
 			'temple'
 		].forEach(function (name) {
-			levels[name] = new Level(loader, name, camera);
+			levels[name] = new Level(loader, name);
 		});
 
 		var currentLevel = 'start';
+
+		var camera = new Camera();
 		camera.set(22, 0.3, 16, Math.PI / 6);
 
 		(new OOGL.RenderLoop(function () {
@@ -127,8 +127,8 @@ function Game() {
 			if (keyboard.isDown(KeyEvent.DOM_VK_RIGHT)) {
 				da--;
 			}
-			camera.move(levels[currentLevel], dz * 0.05, dx * 0.05, da * 0.05, false);
-			levels[currentLevel].render();
+			camera.move(levels[currentLevel], dz * 0.1, dx * 0.1, da * 0.05, false);
+			levels[currentLevel].render(camera);
 			oogl.flush();
 		})).start();
 	}, function (progress) {

@@ -43,10 +43,11 @@ function Camera() {
 		var dx = v.x;
 		var dz = v.z;
 
-		var collision = Physics.clampAgainstWalls(position, 0.6, function (i, j) {
-			return level.block(i, j) || level.water(i, j);
-		}, v);
+		//var collision = Physics.clampAgainstWalls(position, 0.6, function (i, j) {
+		//	return level.block(i, j) || level.water(i, j);
+		//}, v);
 		//collision |= level.entities.clamp(position, 0.6, v);
+		var collision = false;
 		movePosition(v.x, v.z);
 
 		y = 0.3 + Math.cos(Math.PI + waveStep * 2 * Math.PI / waveSteps) * 0.05;

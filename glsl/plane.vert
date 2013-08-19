@@ -4,9 +4,9 @@ uniform float fHeight;
 const float fScreenRatio = 160.0 / 91.0;
 
 mat4 ModelViewProjection = mat4(
-	1, 0, 0, 0,
-	0, fScreenRatio, 0, 0,
-	0, 0, 0, 1,
+	10, 0, 0, 0,
+	0, fScreenRatio * 10.0, 0, 0,
+	0, 0, 0, 10,
 	0, 0, 1, 0
 ) * mat4(
 	cos(Camera.w), 0, -sin(Camera.w), 0,

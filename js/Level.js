@@ -1,10 +1,14 @@
-function Level(loader, name, camera) {
+function Level(loader, name) {
 	var data = loader.getData('data/' + name + '.json');
 
-	var sky = new Sky(loader, camera);
-	var plane = new Plane(name, loader, camera);
+	var sky = new Sky(loader);
+	var plane = new Plane(name, loader);
+
 	//this.squares = new Squares(data, camera);
-	var blocks = new Blocks(data, loader, camera);
+
+	var blocks = new Blocks(data, loader);
+	var staticSprites = new StaticSprites(data, loader);
+
 	//this.doors = new Doors(data, camera);
 	//this.switches = new Switches(data.switchMap, this.doors);
 	//this.sprites = new Sprites(data, camera);
@@ -40,13 +44,13 @@ function Level(loader, name, camera) {
 	oogl.depthFunc(oogl.GREATER);
 	oogl.clearDepth(0);
 
-	this.render = function () {
+	this.render = function (camera) {
 		oogl.disable(oogl.DEPTH_TEST);
-		if (!data.ceiling) {
-			sky.render();
-		}
 		oogl.disable(oogl.CULL_FACE);
-		plane.setup();
+		if (!data.ceiling) {
+			sky.render(camera);
+		}
+		plane.setup(camera);
 		plane.render(-1);
 		if (data.ceiling) {
 			plane.render(1);
@@ -55,6 +59,7 @@ function Level(loader, name, camera) {
 		oogl.enable(oogl.DEPTH_TEST);
 		oogl.clear(oogl.DEPTH_BUFFER_BIT);
 		oogl.enable(oogl.CULL_FACE);
-		blocks.render();
+		blocks.render(camera);
+		staticSprites.render(camera);
 	};
 }

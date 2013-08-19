@@ -1,11 +1,4 @@
 uniform vec4 Camera;
-uniform vec3 Position;
-
-attribute vec2 in_Vertex;
-attribute vec2 in_TexCoord;
-
-varying vec2 ex_Vertex;
-varying vec2 ex_TexCoord;
 
 const float fScreenRatio = 160.0 / 91.0;
 mat4 Projection = mat4(
@@ -15,7 +8,7 @@ mat4 Projection = mat4(
 	0, 0, 1, 0
 );
 
-mat4 ModelView = mat4(
+mat4 View = mat4(
 	cos(Camera.w), 0, -sin(Camera.w), 0,
 	0, 1, 0, 0,
 	sin(Camera.w), 0, cos(Camera.w), 0,
@@ -25,12 +18,12 @@ mat4 ModelView = mat4(
 	0, 1, 0, 0,
 	0, 0, 1, 0,
 	-vec3(Camera), 1
-) * mat4(
-	1, 0, 0, 0,
-	0, 1, 0, 0,
-	0, 0, 1, 0,
-	Position, 1
 );
+
+attribute vec2 in_Vertex;
+attribute vec2 in_Pivot;
+
+varying vec2 ex_Vertex;
 
 void main() {
 	vec4 Vertex = mat4(
@@ -38,8 +31,7 @@ void main() {
 		0, 1, 0, 0,
 		0, 0, 1, 0,
 		in_Vertex, 0, 1
-	) * ModelView * vec4(0, 0, 0, 1);
+	) * View * vec4(in_Pivot.x, 0, in_Pivot.y, 0.5);
 	gl_Position = Projection * Vertex;
 	ex_Vertex = vec2(Vertex.x, Vertex.z) / Vertex.w;
-	ex_TexCoord = in_TexCoord;
 }

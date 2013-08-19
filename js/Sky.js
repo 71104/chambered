@@ -1,4 +1,4 @@
-function Sky(loader, camera) {
+function Sky(loader) {
 	var program = loader.getProgram('glsl/sky');
 	var texture = loader.getTexture('media/sky.png');
 
@@ -6,7 +6,7 @@ function Sky(loader, camera) {
 	arrays.add2f([-1, 1, -1, -0.4, 5.4, -0.4, 5.4, 1]);
 	arrays.add2f([0, 0, 0, 1, 1, 1, 1, 0]);
 
-	this.render = function () {
+	this.render = function (camera) {
 		program.use();
 		arrays.enable();
 		arrays.bindAndPointer();
