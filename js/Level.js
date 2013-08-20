@@ -9,17 +9,17 @@ function Level(loader, name) {
 	var blocks = new Blocks(data, loader);
 	var staticSprites = new StaticSprites(data, loader);
 	var sprites = new Sprites(data, loader);
+	var bars = new Bars(sprites);
+	var chests = new Chests(sprites);
+	var boulders = new Boulders(sprites);
+	var enemies = new Enemies(sprites);
 
 	//this.doors = new Doors(data, camera);
 	//this.switches = new Switches(data.switchMap, this.doors);
 	//this.torches = new Torches(this, data);
 	//this.weakWalls = new WeakWalls(this, data, camera);
 	//this.trinkets = new Trinkets(this, data.spriteMap);
-	//this.chests = new Chests(this, data.lootMap);
 	//this.entities = new Entities(this, data);
-	//this.boulders = new Boulders(this, data);
-	//this.bars = new Bars(this, data.walkMap);
-	//this.enemies = new Enemies(this);
 
 	this.block = function (i, j) {
 		return (i in data.walkMap) && data.walkMap[i][j];

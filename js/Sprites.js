@@ -8,12 +8,33 @@ function Sprites(levelData, loader) {
 
 	var sprites = new MultiSet();
 
-	this.add = function (type, x, z) {
+	function add(type, x, z) {
 		return sprites.add({
 			type: type,
 			x: x,
 			z: z
 		});
+	};
+
+	function addTypes(types) {
+		var removers = [];
+		var spriteMap = levelData.spriteMap;
+		types.forEach(function (type) {
+			for (var i in spriteMap) {
+				for (var j in spriteMap[i]) {
+					if (spriteMap[i][j] === type) {
+						removers.push(add(type, j * 2, i * 2));
+					}
+				}
+			}
+		});
+		return removers;
+	}
+
+	this.add = add;
+	this.addTypes = addTypes;
+	this.addType = function (type) {
+		return addTypes([type]);
 	};
 
 	function drawSprite(sprite) {
