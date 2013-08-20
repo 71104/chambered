@@ -20,18 +20,18 @@ function StaticSprites(levelData, loader) {
 			for (var j in spriteMap[i]) {
 				var x = j * 2;
 				var z = i * 2;
-				if (spriteMap[i][j] === 3) {
+				if ((spriteMap[i][j] === 3) || (spriteMap[i][j] === 4)) {
 					if (wallMap[i - 1] && (wallMap[i - 1][j] === 0)) {
-						addSprite(10 - (i + j) % 2, x, z - 0.85);
+						addSprite(4 - (i + j) % 2, x, z - 0.85);
 					}
 					if (wallMap[i + 1] && (wallMap[i + 1][j] === 0)) {
-						addSprite(9 + (i + j) % 2, x, z + 0.85);
+						addSprite(3 + (i + j) % 2, x, z + 0.85);
 					}
 					if (wallMap[i] && (wallMap[i][j - 1] === 0)) {
-						addSprite(10 - (i + j) % 2, x - 0.85, z);
+						addSprite(4 - (i + j) % 2, x - 0.85, z);
 					}
 					if (wallMap[i] && (wallMap[i][j + 1] === 0)) {
-						addSprite(9 + (i + j) % 2, x + 0.85, z);
+						addSprite(3 + (i + j) % 2, x + 0.85, z);
 					}
 				} else if ((spriteMap[i][j] === 9) || (spriteMap[i][j] === 10)) {
 					addSprite(spriteMap[i][j], x, z);

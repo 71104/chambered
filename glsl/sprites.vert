@@ -24,16 +24,18 @@ attribute vec2 in_Vertex;
 attribute vec2 in_Pivot;
 attribute float in_fType;
 
-varying float ex_fType;
-varying vec2 ex_Vertex;
+varying vec4 ex_Vertex;
+varying vec2 ex_TexCoord;
 
 void main() {
-	gl_Position = Projection * mat4(
+	vec4 Vertex = mat4(
 		1, 0, 0, 0,
 		0, 1, 0, 0,
 		0, 0, 1, 0,
 		in_Vertex, 0, 1
 	) * View * vec4(in_Pivot.x, 0, in_Pivot.y, 1);
-	ex_fType = in_fType;
-	ex_Vertex = (in_Vertex + 1.0) / 2.0;
+	gl_Position = Projection * Vertex;
+	ex_Vertex = Vertex;
+	ex_TexCoord = (in_Vertex + 1.0) / 2.0;
+	ex_TexCoord.x = (ex_TexCoord.x + in_fType) / 32.0;
 }
