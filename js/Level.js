@@ -7,6 +7,8 @@ function Level(loader, name) {
 	var blocks = new Blocks(data, loader);
 	var staticSprites = new StaticSprites(data, loader);
 	var sprites = new Sprites(data, loader);
+	var rubble = new Rubble(loader, 0);
+	var weakWalls = new WeakWalls(data, loader, rubble);
 
 	var bars = new Bars(sprites);
 	var trinkets = new Trinkets(sprites);
@@ -17,7 +19,6 @@ function Level(loader, name) {
 
 	//this.doors = new Doors(data, camera);
 	//this.switches = new Switches(data.switchMap, this.doors);
-	//this.weakWalls = new WeakWalls(this, data, camera);
 	//this.entities = new Entities(this, data);
 
 	this.block = function (i, j) {
@@ -60,6 +61,7 @@ function Level(loader, name) {
 		oogl.clear(oogl.DEPTH_BUFFER_BIT);
 		oogl.enable(oogl.CULL_FACE);
 		blocks.render(camera);
+		weakWalls.render(camera);
 		staticSprites.render(camera);
 		sprites.render(camera);
 	};
