@@ -42,6 +42,7 @@ function Game() {
 		'glsl/blocks': ['in_Vertex', 'in_TexCoord', 'in_fBrightness'],
 		'glsl/plane': ['in_Vertex'],
 		'glsl/sky': ['in_Vertex', 'in_TexCoord'],
+		'glsl/sprite': ['in_Vertex'],
 		'glsl/sprites': ['in_Vertex', 'in_TexCoord', 'in_fType'],
 		'glsl/squares': ['in_Vertex', 'in_TexCoord'],
 		'glsl/door/0': ['in_Vertex', 'in_TexCoord'],
