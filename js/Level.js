@@ -3,12 +3,11 @@ function Level(loader, name) {
 
 	var sky = new Sky(loader);
 	var plane = new Plane(name, loader);
-
-	//this.squares = new Squares(data, camera);
-
+	var squares = new Squares(data, loader);
 	var blocks = new Blocks(data, loader);
 	var staticSprites = new StaticSprites(data, loader);
 	var sprites = new Sprites(data, loader);
+
 	var bars = new Bars(sprites);
 	var trinkets = new Trinkets(sprites);
 	var chests = new Chests(sprites);
@@ -56,6 +55,7 @@ function Level(loader, name) {
 			plane.render(1);
 		}
 		plane.cleanup();
+		squares.render(camera);
 		oogl.enable(oogl.DEPTH_TEST);
 		oogl.clear(oogl.DEPTH_BUFFER_BIT);
 		oogl.enable(oogl.CULL_FACE);
