@@ -10,15 +10,15 @@ function Level(loader, name) {
 	var staticSprites = new StaticSprites(data, loader);
 	var sprites = new Sprites(data, loader);
 	var bars = new Bars(sprites);
+	var trinkets = new Trinkets(sprites);
 	var chests = new Chests(sprites);
+	var altars = new Altars(sprites);
 	var boulders = new Boulders(sprites);
 	var enemies = new Enemies(sprites);
 
 	//this.doors = new Doors(data, camera);
 	//this.switches = new Switches(data.switchMap, this.doors);
-	//this.torches = new Torches(this, data);
 	//this.weakWalls = new WeakWalls(this, data, camera);
-	//this.trinkets = new Trinkets(this, data.spriteMap);
 	//this.entities = new Entities(this, data);
 
 	this.block = function (i, j) {

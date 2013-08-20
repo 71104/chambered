@@ -8,38 +8,54 @@ function Sprites(levelData, loader) {
 
 	var sprites = new MultiSet();
 
-	function add(type, x, z) {
-		return sprites.add({
-			type: type,
-			x: x,
-			z: z
-		});
-	};
+	function Sprite(type, x, z) {
+		this.setType = function (newType) {
+			type = newType;
+		};
+
+		this.setPosition = function (newX, newZ) {
+			x = newX;
+			z = newZ;
+		};
+
+		this.fork = function (type) {
+			return new Sprite(type, x, z);
+		};
+
+		this.render = function () {
+			program.uniform3f('Sprite', type, x, z);
+			arrays.drawTriangles();
+		};
+
+		this.remove = sprites.add(this);
+	}
 
 	function addTypes(types) {
-		var removers = [];
+		var sprites = [];
 		var spriteMap = levelData.spriteMap;
 		types.forEach(function (type) {
 			for (var i in spriteMap) {
 				for (var j in spriteMap[i]) {
 					if (spriteMap[i][j] === type) {
-						removers.push(add(type, j * 2, i * 2));
+						sprites.push(new Sprite(type, j * 2, i * 2));
 					}
 				}
 			}
 		});
-		return removers;
+		return sprites;
 	}
 
-	this.add = add;
+	this.add = function (type, x, z) {
+		return new Sprite(type, x, z);
+	};
+
 	this.addTypes = addTypes;
 	this.addType = function (type) {
 		return addTypes([type]);
 	};
 
 	function drawSprite(sprite) {
-		program.uniform3f('Sprite', sprite.type, sprite.x, sprite.z);
-		arrays.drawTriangles();
+		sprite.render();
 	}
 
 	this.render = function (camera) {
