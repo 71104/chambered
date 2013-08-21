@@ -25,7 +25,7 @@ function WeakWalls(levelData, loader, rubble) {
 
 	this.destroy = function (i, j) {
 		if ((i in map) && map[i][j]) {
-			//Sound.play('crumble');
+			Sound.play('crumble');
 			delete map[i][j];
 			delete wallMap[i][j];
 			walkMap[i][j] = false;
