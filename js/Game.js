@@ -117,6 +117,15 @@ function Game() {
 			oogl.flush();
 		});
 
+		(function () {
+			for (var name in levels) {
+				levels[name].ladders.on('ladder', function (nextLevelName) {
+					Sound.play('ladder');
+					player.setLevel(levels[currentLevel = nextLevelName]);
+				});
+			}
+		})();
+
 		loop.start();
 	}, function (progress) {
 		document.title = Math.round(progress) + '%';

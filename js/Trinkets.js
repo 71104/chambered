@@ -18,7 +18,7 @@ function Trinkets(sprites) {
 		trinkets.fastForEach(function (trinket) {
 			var cell = trinket.getCell();
 			if ((cell.i == i) && (cell.j == j)) {
-				Sound.play('trinket');
+				Sound.play('pickup');
 				trinket.remove();
 			}
 		});
