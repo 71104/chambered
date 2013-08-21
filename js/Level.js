@@ -14,7 +14,7 @@ function Level(loader, name) {
 	var trinkets = new Trinkets(sprites);
 	var chests = new Chests(data, sprites);
 	var altars = new Altars(sprites);
-	var boulders = new Boulders(sprites);
+	var boulders = new Boulders(this, sprites);
 	var enemies = new Enemies(sprites);
 	var ladders = new Ladders(data);
 

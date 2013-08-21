@@ -86,6 +86,12 @@ function Game() {
 
 		var player = new Player(camera, items, levels[currentLevel]);
 
+		keyboard.on('down', function (keyCode) {
+			if (keyCode == KeyEvent.DOM_VK_SPACE) {
+				player.action();
+			}
+		});
+
 		var loop = new OOGL.RenderLoop(function () {
 			var dz = 0, dx = 0, da = 0;
 			if (keyboard.anyDown([KeyEvent.DOM_VK_UP, KeyEvent.DOM_VK_W])) {
