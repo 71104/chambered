@@ -117,15 +117,20 @@ function Game() {
 			oogl.flush();
 		});
 
-		(function () {
-			for (var name in levels) {
-				levels[name].ladders.on('ladder', function (nextLevelName) {
-					Sound.play('ladder');
-					player.setLevel(levels[currentLevel = nextLevelName]);
-				});
-			}
-		})();
+		Chests.on('loot', function (type) {
+			items.found(type);
+		});
 
+		Ladders.on('ladder', function (nextLevelName) {
+			Sound.play('ladder');
+			player.setLevel(levels[currentLevel = nextLevelName]);
+		});
+
+		Sound.play('altar');
+
+		// TODO show start screen
+
+		Sound.play('ladder');
 		loop.start();
 	}, function (progress) {
 		document.title = Math.round(progress) + '%';
