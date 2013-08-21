@@ -13,6 +13,19 @@ function Sprites(levelData, loader) {
 			type = newType;
 		};
 
+		this.getPosition = function () {
+			return {
+				x: x,
+				z: z
+			};
+		};
+		this.getCell = function () {
+			return {
+				i: Math.round(z / 2),
+				j: Math.round(x / 2)
+			};
+		};
+
 		this.setPosition = function (newX, newZ) {
 			x = newX;
 			z = newZ;

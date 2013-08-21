@@ -84,7 +84,7 @@ function Game() {
 		var camera = new Camera();
 		camera.set(22, 0.3, 16, Math.PI / 6);
 
-		(new OOGL.RenderLoop(function () {
+		var loop = new OOGL.RenderLoop(function () {
 			var dz = 0, dx = 0, da = 0;
 			if (keyboard.anyDown([KeyEvent.DOM_VK_UP, KeyEvent.DOM_VK_W])) {
 				dz++;
@@ -107,7 +107,9 @@ function Game() {
 			camera.move(levels[currentLevel], dz * 0.1, dx * 0.1, da * 0.05, false);
 			levels[currentLevel].render(camera);
 			oogl.flush();
-		})).start();
+		});
+
+		loop.start();
 	}, function (progress) {
 		document.title = Math.round(progress) + '%';
 	});

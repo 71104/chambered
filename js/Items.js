@@ -1,4 +1,4 @@
-function Items(keyboard) {
+function Items() {
 	var itemNames = ['Power Glove', 'Pistol', 'Flippers', 'Cutters', 'Skates', 'Potion'];
 	var messages = ['Smaaaash!!', 'Pew, pew, pew!', 'Splish splash!', 'Snip, snip!', 'Sharp!', 'Healthy!'];
 
@@ -18,13 +18,13 @@ function Items(keyboard) {
 		setItem();
 	}
 
-	function setElementText(selector, text) {
-		var element = querySelector(selector);
-		while (element.hasChildNodes()) {
-			element.removeChild(element.firstChild);
-		}
-		element.appendChild(createTextNode(text));
-	}
+	//function setElementText(selector, text) {
+	//	var element = querySelector(selector);
+	//	while (element.hasChildNodes()) {
+	//		element.removeChild(element.firstChild);
+	//	}
+	//	element.appendChild(createTextNode(text));
+	//}
 
 	this.found = function (item) {
 		if (item in count) {
@@ -43,17 +43,17 @@ function Items(keyboard) {
 			}
 			addItem(item);
 		}
-		setElementText('#loot-message #item-name', itemNames[item]);
-		setElementText('#loot-message #loot-specific-message', messages[item]);
-		querySelector('#loot-screen').style.display = 'block';
-		setTimeout(function () {
-			querySelector('#loot-screen #continue-button').style.display = 'inline';
-			keyboard.once('down', function handler(keyCode) {
-				if ((keyCode == KeyEvent.DOM_VK_SPACE) || (keyCode == KeyEvent.DOM_VK_ENTER)) {
-					querySelector('#loot-screen,#loot-screen #continue-button').style.display = 'none';
-				}
-			});
-		}, 750);
+		//setElementText('#loot-message #item-name', itemNames[item]);
+		//setElementText('#loot-message #loot-specific-message', messages[item]);
+		//querySelector('#loot-screen').style.display = 'block';
+		//setTimeout(function () {
+		//	querySelector('#loot-screen #continue-button').style.display = 'inline';
+		//	keyboard.once('down', function handler(keyCode) {
+		//		if ((keyCode == KeyEvent.DOM_VK_SPACE) || (keyCode == KeyEvent.DOM_VK_ENTER)) {
+		//			querySelector('#loot-screen,#loot-screen #continue-button').style.display = 'none';
+		//		}
+		//	});
+		//}, 750);
 	};
 	this.select = function (index) {
 		if ((index >= 0) && (index < 8)) {
@@ -74,12 +74,12 @@ function Items(keyboard) {
 		}
 	};
 
-	this.action = function () {
-		querySelector('img#item-' + items[selectedIndex]).style.display = 'none';
-		querySelector('img#action-item-' + items[selectedIndex]).style.display = 'inline';
-	};
-	this.withdraw = function () {
-		querySelector('img#action-item-' + items[selectedIndex]).style.display = 'none';
-		querySelector('img#item-' + items[selectedIndex]).style.display = 'inline';
-	};
+	//this.action = function () {
+	//	querySelector('img#item-' + items[selectedIndex]).style.display = 'none';
+	//	querySelector('img#action-item-' + items[selectedIndex]).style.display = 'inline';
+	//};
+	//this.withdraw = function () {
+	//	querySelector('img#action-item-' + items[selectedIndex]).style.display = 'none';
+	//	querySelector('img#item-' + items[selectedIndex]).style.display = 'inline';
+	//};
 }
