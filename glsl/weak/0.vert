@@ -1,3 +1,5 @@
+precision mediump float;
+
 uniform vec4 Camera;
 uniform ivec2 Position;
 

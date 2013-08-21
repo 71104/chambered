@@ -1,3 +1,5 @@
+precision mediump float;
+
 uniform vec4 Camera;
 
 const float fScreenRatio = 160.0 / 91.0;

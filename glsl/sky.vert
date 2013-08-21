@@ -1,3 +1,5 @@
+precision mediump float;
+
 uniform vec4 Camera;
 
 attribute vec2 in_Vertex;
