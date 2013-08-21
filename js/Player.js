@@ -1,6 +1,4 @@
-function Player(level, camera) {
-	var $this = this;
-
+function Player(camera, items, level) {
 	var moveSpeed = 7.5; // units per second
 	var moveDelta = moveSpeed * period / 1000;
 	var turnSpeed = Math.PI * 1.5; // radiants per second
@@ -16,7 +14,7 @@ function Player(level, camera) {
 		}
 		var State = {
 			walking: (function (newLevel) {
-				return function (level, input, dz, dx, da) {
+				return function (input, dz, dx, da) {
 					var move = camera.move(level, dz, dx, da, input);
 					if (input) {
 						level.trinkets.remove(move.i, move.j);
@@ -26,7 +24,7 @@ function Player(level, camera) {
 							return State.walking(true);
 						} else {
 							if (level.ice(move.i, move.j)) {
-								if (level.items.getSelected() != 4) {
+								if (items.getSelected() != 4) {
 									Sound.play('slide');
 									return State.sliding({
 										x: (move.j - move.j0) * slideDelta,
@@ -46,13 +44,13 @@ function Player(level, camera) {
 				};
 			}),
 			sliding: (function (vector) {
-				return function (level, input, dz, dx, da) {
+				return function (input, dz, dx, da) {
 					var move = camera.slide(level, vector.z, vector.x, da, input);
 					if (move.newCell && !level.ice(move.i, move.j)) {
 						return State.walking(false);
 					} else if (move.collision) {
 						return State.stopped;
-					} else if (level.items.getSelected() != 4) {
+					} else if (items.getSelected() != 4) {
 						return State.sliding(vector);
 					} else {
 						camera.startSkating(vector.x, vector.z);
@@ -60,10 +58,10 @@ function Player(level, camera) {
 					}
 				};
 			}),
-			stopped: function (level, input, dz, dx, da) {
+			stopped: function (input, dz, dx, da) {
 				var move = camera.move(level, dz, dx, da, input);
 				if (input) {
-					if (level.items.getSelected() != 4) {
+					if (items.getSelected() != 4) {
 						Sound.play('slide');
 						if (Math.abs(move.dx) > Math.abs(move.dz)) {
 							return State.sliding({
@@ -84,11 +82,11 @@ function Player(level, camera) {
 					return State.stopped;
 				}
 			},
-			skating: function (level, input, dz, dx, da) {
+			skating: function (input, dz, dx, da) {
 				var move = camera.skate(level, dz, dx, da);
 				if (move.newCell && !level.ice(move.i, move.j)) {
 					return State.walking(false);
-				} else if (level.items.getSelected() != 4) {
+				} else if (items.getSelected() != 4) {
 					Sound.play('slide');
 					if (Math.abs(move.dx) > Math.abs(move.dz)) {
 						return State.sliding({
@@ -105,7 +103,7 @@ function Player(level, camera) {
 					return State.skating;
 				}
 			},
-			swimming: function (level, input, dz, dx, da) {
+			swimming: function (input, dz, dx, da) {
 				// TODO
 			}
 		};
@@ -116,7 +114,7 @@ function Player(level, camera) {
 		dz *= moveDelta;
 		dx *= moveDelta;
 		da *= turnDelta;
-		moveState = moveState($this.level, !!(dz || dx), dz, dx, da);
+		moveState = moveState(!!(dz || dx), dz, dx, da);
 	};
 
 	this.action = function () {
@@ -125,7 +123,7 @@ function Player(level, camera) {
 		level.chests.open(cell.i, cell.j);
 		//level.doors.toggle(cell.i, cell.j);
 		//level.switches.switch_(cell.i, cell.j);
-		var selectedItem = level.items.getSelected();
+		var selectedItem = items.getSelected();
 		if (selectedItem === 0) {
 			var cameraPosition = camera.getPosition();
 			var x = cameraPosition.x;

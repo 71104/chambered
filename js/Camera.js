@@ -1,6 +1,4 @@
 function Camera() {
-	var period = 16.67;
-
 	var position = {
 		x: 0,
 		z: 0

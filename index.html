@@ -21,6 +21,7 @@
 	<script type="text/javascript" src="js/Squares.js"></script>
 	<script type="text/javascript" src="js/Blocks.js"></script>
 	<script type="text/javascript" src="js/StaticSprites.js"></script>
+	<script type="text/javascript" src="js/Ladders.js"></script>
 	<script type="text/javascript" src="js/Sprites.js"></script>
 	<script type="text/javascript" src="js/Bars.js"></script>
 	<script type="text/javascript" src="js/Trinkets.js"></script>
@@ -31,6 +32,7 @@
 	<script type="text/javascript" src="js/Rubble.js"></script>
 	<script type="text/javascript" src="js/WeakWalls.js"></script>
 	<script type="text/javascript" src="js/Level.js"></script>
+	<script type="text/javascript" src="js/Player.js"></script>
 	<script type="text/javascript" src="js/Game.js"></script>
 	<script type="text/javascript">
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -81,6 +83,8 @@ ga('send', 'pageview');
 	<div>(You don't need Java to play this)</div>
 	<p></p>
 	<script type="text/javascript">
+var rate = 60;
+var period = 1000 / rate;
 var oogl;
 OOGL(function () {
 	new Game(oogl = new OOGL.Context('canvas', {

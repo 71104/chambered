@@ -4,7 +4,7 @@ function Chests(levelData, sprites) {
 	var map = levelData.lootMap;
 
 	this.open = function (i, j) {
-		chests.fastForEach(function (chest) {
+		chests.forEach(function (chest) {
 			var cell = trinket.getCell();
 			if ((cell.i == i) && (cell.j == j)) {
 				Sound.play('chest');

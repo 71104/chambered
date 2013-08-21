@@ -10,17 +10,16 @@ function Level(loader, name) {
 	var rubble = new Rubble(loader, 0);
 	var weakWalls = new WeakWalls(data, loader, rubble);
 
-	var items = new Items();
 	var bars = new Bars(sprites);
 	var trinkets = new Trinkets(sprites);
 	var chests = new Chests(data, sprites);
 	var altars = new Altars(sprites);
 	var boulders = new Boulders(sprites);
 	var enemies = new Enemies(sprites);
+	var ladders = new Ladders(data);
 
 	//this.doors = new Doors(data, camera);
 	//this.switches = new Switches(data.switchMap, this.doors);
-	//this.entities = new Entities(this, data);
 
 	this.name = name;
 	this.squares = squares;
@@ -31,6 +30,7 @@ function Level(loader, name) {
 	this.altars = altars;
 	this.boulders = boulders;
 	this.enemies = enemies;
+	this.ladders = ladders;
 
 	this.block = function (i, j) {
 		return (i in data.walkMap) && data.walkMap[i][j];

@@ -84,6 +84,8 @@ function Game() {
 		var camera = new Camera();
 		camera.set(22, 0.3, 16, Math.PI / 6);
 
+		var player = new Player(camera, items, levels[currentLevel]);
+
 		var loop = new OOGL.RenderLoop(function () {
 			var dz = 0, dx = 0, da = 0;
 			if (keyboard.anyDown([KeyEvent.DOM_VK_UP, KeyEvent.DOM_VK_W])) {
@@ -104,7 +106,7 @@ function Game() {
 			if (keyboard.isDown(KeyEvent.DOM_VK_RIGHT)) {
 				da--;
 			}
-			camera.move(levels[currentLevel], dz * 0.1, dx * 0.1, da * 0.05, false);
+			player.tick(dz, dx, da);
 			levels[currentLevel].render(camera);
 			oogl.flush();
 		});

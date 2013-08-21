@@ -1,4 +1,4 @@
-function Items() {
+function Items(keyboard) {
 	var itemNames = ['Power Glove', 'Pistol', 'Flippers', 'Cutters', 'Skates', 'Potion'];
 	var messages = ['Smaaaash!!', 'Pew, pew, pew!', 'Splish splash!', 'Snip, snip!', 'Sharp!', 'Healthy!'];
 
@@ -7,24 +7,24 @@ function Items() {
 	var selectedIndex = 0;
 
 	function setItem() {
-		querySelector('#hiliter').style.right = (4 + 64 * (7 - selectedIndex)) + 'px';
-		querySelector('img.item').style.display = 'none';
-		querySelector('img#item-' + items[selectedIndex]).style.display = 'display';
+		document.querySelector('#hiliter').style.right = (4 + 64 * (7 - selectedIndex)) + 'px';
+		document.querySelector('img.item').style.display = 'none';
+		document.querySelector('img#item-' + items[selectedIndex]).style.display = 'display';
 	}
 	function addItem(item) {
 		var image = new Image();
 		image.src = 'media/item/' + item + '/icon.png';
-		querySelector('#item-icon-' + selectedIndex + '.item-icon').appendChild(image);
+		document.querySelector('#item-icon-' + selectedIndex + '.item-icon').appendChild(image);
 		setItem();
 	}
 
-	//function setElementText(selector, text) {
-	//	var element = querySelector(selector);
-	//	while (element.hasChildNodes()) {
-	//		element.removeChild(element.firstChild);
-	//	}
-	//	element.appendChild(createTextNode(text));
-	//}
+	function setElementText(selector, text) {
+		var element = document.querySelector(selector);
+		while (element.hasChildNodes()) {
+			element.removeChild(element.firstChild);
+		}
+		element.appendChild(createTextNode(text));
+	}
 
 	this.found = function (item) {
 		if (item in count) {
@@ -43,17 +43,17 @@ function Items() {
 			}
 			addItem(item);
 		}
-		//setElementText('#loot-message #item-name', itemNames[item]);
-		//setElementText('#loot-message #loot-specific-message', messages[item]);
-		//querySelector('#loot-screen').style.display = 'block';
-		//setTimeout(function () {
-		//	querySelector('#loot-screen #continue-button').style.display = 'inline';
-		//	keyboard.once('down', function handler(keyCode) {
-		//		if ((keyCode == KeyEvent.DOM_VK_SPACE) || (keyCode == KeyEvent.DOM_VK_ENTER)) {
-		//			querySelector('#loot-screen,#loot-screen #continue-button').style.display = 'none';
-		//		}
-		//	});
-		//}, 750);
+		setElementText('#loot-message #item-name', itemNames[item]);
+		setElementText('#loot-message #loot-specific-message', messages[item]);
+		document.querySelector('#loot-screen').style.display = 'block';
+		setTimeout(function () {
+			document.querySelector('#loot-screen #continue-button').style.display = 'inline';
+			keyboard.once('down', function handler(keyCode) {
+				if ((keyCode == KeyEvent.DOM_VK_SPACE) || (keyCode == KeyEvent.DOM_VK_ENTER)) {
+					document.querySelector('#loot-screen,#loot-screen #continue-button').style.display = 'none';
+				}
+			});
+		}, 750);
 	};
 	this.select = function (index) {
 		if ((index >= 0) && (index < 8)) {
@@ -74,12 +74,12 @@ function Items() {
 		}
 	};
 
-	//this.action = function () {
-	//	querySelector('img#item-' + items[selectedIndex]).style.display = 'none';
-	//	querySelector('img#action-item-' + items[selectedIndex]).style.display = 'inline';
-	//};
-	//this.withdraw = function () {
-	//	querySelector('img#action-item-' + items[selectedIndex]).style.display = 'none';
-	//	querySelector('img#item-' + items[selectedIndex]).style.display = 'inline';
-	//};
+	this.action = function () {
+		document.querySelector('img#item-' + items[selectedIndex]).style.display = 'none';
+		document.querySelector('img#action-item-' + items[selectedIndex]).style.display = 'inline';
+	};
+	this.withdraw = function () {
+		document.querySelector('img#action-item-' + items[selectedIndex]).style.display = 'none';
+		document.querySelector('img#item-' + items[selectedIndex]).style.display = 'inline';
+	};
 }
