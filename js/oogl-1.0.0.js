@@ -533,7 +533,12 @@ OOGL.Async = {
 	 *	TODO
 	 */
 	serial: function () {
-		var tasks = arguments;
+		var tasks;
+		if ((arguments.length === 1) && (typeof arguments[0] !== 'function')) {
+			tasks = arguments[0];
+		} else {
+			tasks = arguments;
+		}
 		return function (callback, scope) {
 			if (tasks.length) {
 				(function run(index) {
@@ -576,7 +581,12 @@ OOGL.Async = {
 	 *	TODO
 	 */
 	parallel: function () {
-		var tasks = arguments;
+		var tasks;
+		if ((arguments.length === 1) && (typeof arguments[0] !== 'function')) {
+			tasks = arguments[0];
+		} else {
+			tasks = arguments;
+		}
 		return function (callback, scope) {
 			if (tasks.length) {
 				var count = tasks.length;
@@ -5326,6 +5336,7 @@ context.AsyncTexture = function (url, callback, magFilter, minFilter) {
 	 */
 	texture.image = new Image();
 	texture.image.addEventListener('load', function () {
+		texture.bind();
 		texture.image2D(0, context.RGBA, context.UNSIGNED_BYTE, texture.image);
 		callback && callback.call(texture);
 	}, false);
