@@ -1,10 +1,10 @@
-function Rubble(loader, type) {
-	var program = loader.getProgram('glsl/rubble');
+function Rubble(assets, type) {
+	var program = assets.getProgram('glsl/rubble');
 
 	var arrays = new oogl.AttributeArrays(6);
 	arrays.add2f([-1, 1, -1, -1, 1, -1, 1, -1, 1, 1, -1, 1]);
 
-	var texture = loader.getTexture('media/sprites.png');
+	var texture = assets.getTexture('media/sprites.png');
 
 	var pebbles = new MultiSet();
 

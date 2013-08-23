@@ -1,10 +1,10 @@
-function Sprites(levelData, loader) {
-	var program = loader.getProgram('glsl/sprite');
+function Sprites(levelData, assets) {
+	var program = assets.getProgram('glsl/sprite');
 
 	var arrays = new oogl.AttributeArrays(6);
 	arrays.add2f([-1, 1, -1, -1, 1, -1, 1, -1, 1, 1, -1, 1]);
 
-	var texture = loader.getTexture('media/sprites.png');
+	var texture = assets.getTexture('media/sprites.png');
 
 	var sprites = new MultiSet();
 

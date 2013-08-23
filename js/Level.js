@@ -1,14 +1,14 @@
-function Level(loader, name) {
-	var data = loader.getData('data/' + name + '.json');
+function Level(assets, name) {
+	var data = assets.getData('data/' + name + '.json');
 
-	var sky = new Sky(loader);
-	var plane = new Plane(name, loader);
-	var squares = new Squares(data, loader);
-	var blocks = new Blocks(data, loader);
-	var staticSprites = new StaticSprites(data, loader);
-	var sprites = new Sprites(data, loader);
-	var rubble = new Rubble(loader, 0);
-	var weakWalls = new WeakWalls(data, loader, rubble);
+	var sky = new Sky(assets);
+	var plane = new Plane(name, assets);
+	var squares = new Squares(data, assets);
+	var blocks = new Blocks(data, assets);
+	var staticSprites = new StaticSprites(data, assets);
+	var sprites = new Sprites(data, assets);
+	var rubble = new Rubble(assets, 0);
+	var weakWalls = new WeakWalls(data, assets, rubble);
 
 	var bars = new Bars(sprites);
 	var trinkets = new Trinkets(sprites);

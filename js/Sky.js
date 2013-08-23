@@ -1,6 +1,6 @@
-function Sky(loader) {
-	var program = loader.getProgram('glsl/sky');
-	var texture = loader.getTexture('media/sky.png');
+function Sky(assets) {
+	var program = assets.getProgram('glsl/sky');
+	var texture = assets.getTexture('media/sky.png');
 
 	var arrays = new oogl.AttributeArrays(4);
 	arrays.add2f([-1, 1, -1, -0.4, 5.4, -0.4, 5.4, 1]);

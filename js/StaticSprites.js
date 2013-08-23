@@ -1,5 +1,5 @@
-function StaticSprites(levelData, loader) {
-	var program = loader.getProgram('glsl/sprites');
+function StaticSprites(levelData, assets) {
+	var program = assets.getProgram('glsl/sprites');
 
 	var arrays = (function () {
 		var count = 0;
@@ -47,7 +47,7 @@ function StaticSprites(levelData, loader) {
 		return arrays;
 	})();
 
-	var texture = loader.getTexture('media/sprites.png');
+	var texture = assets.getTexture('media/sprites.png');
 
 	this.render = function (camera) {
 		program.use();

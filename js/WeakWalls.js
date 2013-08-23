@@ -1,7 +1,7 @@
-function WeakWalls(levelData, loader, rubble) {
+function WeakWalls(levelData, assets, rubble) {
 	var programs = [];
 	for (var i = 0; i < 4; i++) {
-		programs.push(loader.getProgram('glsl/weak/' + i));
+		programs.push(assets.getProgram('glsl/weak/' + i));
 	}
 
 	var arrays = new oogl.AttributeArrays(4);
@@ -40,7 +40,7 @@ function WeakWalls(levelData, loader, rubble) {
 		return (i in wallMap) && (j in wallMap[i]);
 	}
 
-	var texture = loader.getTexture('media/levels/' + levelData.name + '/walls.png');
+	var texture = assets.getTexture('media/levels/' + levelData.name + '/walls.png');
 
 	this.render = function (camera) {
 		arrays.enable();

@@ -1,6 +1,5 @@
 function Game() {
-	var loader = new oogl.Loader();
-	loader
+	(new oogl.Loader())
 		.queueJSON('data/crypt.json')
 		.queueJSON('data/dungeon.json')
 		.queueJSON('data/ice.json')
@@ -52,7 +51,7 @@ function Game() {
 		'glsl/weak/2': ['in_Vertex', 'in_TexCoord'],
 		'glsl/weak/3': ['in_Vertex', 'in_TexCoord']
 	})
-		.start(function ()
+		.loadAssets(function (assets)
 	{
 		document.title = 'Prelude of the Chambered';
 
@@ -76,7 +75,7 @@ function Game() {
 			'start',
 			'temple'
 		].forEach(function (name) {
-			levels[name] = new Level(loader, name);
+			levels[name] = new Level(assets, name);
 		});
 
 		var currentLevel = 'start';
