@@ -81,7 +81,6 @@ function Game() {
 		var currentLevel = 'start';
 
 		var camera = new Camera();
-		camera.set(22, 0.3, 16, Math.PI / 6);
 
 		var player = new Player(camera, items, levels[currentLevel]);
 
