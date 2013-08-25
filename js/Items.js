@@ -8,7 +8,10 @@ function Items(keyboard) {
 
 	function setItem() {
 		document.querySelector('#hiliter').style.right = (4 + 64 * (7 - selectedIndex)) + 'px';
-		document.querySelector('img.item').style.display = 'none';
+		var itemImages = document.querySelectorAll('img.item');
+		for (var i = 0; i < itemImages.length; i++) {
+			itemImages[i].style.display = 'none';
+		};
 		document.querySelector('img#item-' + items[selectedIndex]).style.display = 'display';
 	}
 	function addItem(item) {
@@ -23,7 +26,7 @@ function Items(keyboard) {
 		while (element.hasChildNodes()) {
 			element.removeChild(element.firstChild);
 		}
-		element.appendChild(createTextNode(text));
+		element.appendChild(document.createTextNode(text));
 	}
 
 	this.found = function (item) {
