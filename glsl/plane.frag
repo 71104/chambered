@@ -5,10 +5,8 @@ uniform vec4 Camera;
 
 varying vec4 ex_Vertex;
 
-float PI = acos(-1.0);
-
 vec4 Attenuate(vec4 Color, float fDistance) {
-	float fAttenuation = (-atan((fDistance - 6.0) * 0.3) + PI / 2.0) * 0.3183098861;
+	float fAttenuation = (-atan((fDistance - 6.0) * 0.3) + 1.5707963267) * 0.3183098861;
 	return vec4(vec3(Color) * fAttenuation, Color.a);
 }
 

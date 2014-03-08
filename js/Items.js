@@ -11,7 +11,7 @@ function Items(keyboard) {
 		var itemImages = document.querySelectorAll('img.item');
 		for (var i = 0; i < itemImages.length; i++) {
 			itemImages[i].style.display = 'none';
-		};
+		}
 		document.querySelector('img#item-' + items[selectedIndex]).style.display = 'display';
 	}
 	function addItem(item) {
